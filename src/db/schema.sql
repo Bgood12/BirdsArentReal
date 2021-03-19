@@ -31,7 +31,8 @@ CREATE TABLE email(
 
 CREATE TABLE ingredients(
     ingredient_id SERIAL PRIMARY KEY,
-
+    ingredient_name varchar(225) NOT NULL,
+    aisle varchar(40)
 );
 
 CREATE TABLE authorship(
@@ -52,8 +53,9 @@ CREATE TABLE incorporation(
 
 CREATE TABLE pantry(
     purchase_date TIMESTAMP PRIMARY KEY,
-    username PRIMARY KEY,
-    ingredient_id SERIAL PRIMARY KEY,
-    ...
-
+    FOREIGN KEY (username) REFERENCES users (username),
+    FOREIGN KEY (ingredient_id) REFERENCES ingredients (ingredient_id)
+    /*If expiration date is derived, do we represent it some special way in the table if at all?*/
+    current_quantity FLOAT,
+    quantity_bought FLOAT NOT NULL
 );
