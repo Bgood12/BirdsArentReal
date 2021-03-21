@@ -6,26 +6,30 @@ CREATE TABLE recipes(
 );
 
 CREATE TABLE categories(
-    recipe_id PRIMARY KEY,
-    name VARCHAR(40)
-
+    recipe_id PRIMARY KEY NOT NULL,
+    name VARCHAR(40) NOT NULL, --Name of recipe limited to 40 characters
+    FOREIGN KEY (recipe_id) REFERENCES recipes (recipe_id)
 );
 
 CREATE TABLE cooks(
-    user_id PRIMARY KEY,
-    recipe_id PRIMARY KEY,
-    creation_date TIMESTAMP
-    ...
+    username PRIMARY KEY NOT NULL, -- We put User_id in the Reduction, think it should be username
+    recipe_id PRIMARY KEY NOT NULL,
+    creation_date PRIMARY KEY NOT NULL,
+    rating FLOAT(1,2) DEFAULT 0.00, --Not sure how many decimal points we want to round to. Defaulted to 0.00 rating.
+    servings SMALLINT DEFAULT 0, --Defaulted to 0 servings
+    FOREIGN KEY (username) REFERENCES users (username),
+    FOREIGN KEY (recipe_id) REFERENCES recipes (recipe_id)
 );
 
 CREATE TABLE users(
-    username PRIMARY KEY,
-    ...
-
+    username PRIMARY KEY NOT NULL,
+    password VARCHAR (20) NOT NULL,   -- Set password limit to 20 characters
+    creation_date TIMESTAMP NOT NULL,
+    last_access_date DATETIME NOT NULL
 );
 
 CREATE TABLE email(
-    email PRIMARY KEY,
+    email PRIMARY KEY ,
 
 );
 
