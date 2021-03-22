@@ -1,0 +1,19 @@
+image:
+  name: birdsarentreal:latest
+
+services:
+  - postgres:11
+
+variables:
+  POSTGRES_DB:
+  POSTGRES_USER:
+  POSTGRES_PASSWORD:
+
+before_script:
+  - pip install -r requirements.txt
+  - cp config/gitlab-credentials.yml config/db.yml
+
+testrunner:
+  script:
+    - python -m unittest # run the unit tests
+  stage: test
