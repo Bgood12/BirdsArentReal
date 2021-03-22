@@ -13,15 +13,15 @@ CREATE TABLE recipes(
 );
 
 CREATE TABLE categories(
-    recipe_id PRIMARY KEY NOT NULL,
-    name VARCHAR(40) NOT NULL, --Name of recipe limited to 40 characters
+    recipe_id PRIMARY KEY,
+    name VARCHAR(40) NOT NULL, 
     FOREIGN KEY (recipe_id) REFERENCES recipes (recipe_id)
 );
 
 CREATE TABLE cooks(
-    username PRIMARY KEY NOT NULL, -- We put User_id in the Reduction, think it should be username
-    recipe_id PRIMARY KEY NOT NULL,
-    creation_date PRIMARY KEY NOT NULL,
+    username PRIMARY KEY, 
+    recipe_id PRIMARY KEY,
+    creation_date PRIMARY KEY,
     rating SMALLINT DEFAULT 0,
     servings SMALLINT DEFAULT 0, --Defaulted to 0 servings
     FOREIGN KEY (username) REFERENCES users (username),
@@ -29,7 +29,7 @@ CREATE TABLE cooks(
 );
 
 CREATE TABLE users(
-    username PRIMARY KEY NOT NULL,
+    username PRIMARY KEY,
     password VARCHAR (40) NOT NULL,   
     creation_date TIMESTAMP NOT NULL,
     last_access_date TIMESTAMP NOT NULL
