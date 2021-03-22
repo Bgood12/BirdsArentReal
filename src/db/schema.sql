@@ -22,7 +22,7 @@ CREATE TABLE cooks(
     username PRIMARY KEY NOT NULL, -- We put User_id in the Reduction, think it should be username
     recipe_id PRIMARY KEY NOT NULL,
     creation_date PRIMARY KEY NOT NULL,
-    rating FLOAT(1,2) DEFAULT 0.00, --Not sure how many decimal points we want to round to. Defaulted to 0.00 rating.
+    rating SMALLINT DEFAULT 0,
     servings SMALLINT DEFAULT 0, --Defaulted to 0 servings
     FOREIGN KEY (username) REFERENCES users (username),
     FOREIGN KEY (recipe_id) REFERENCES recipes (recipe_id)
