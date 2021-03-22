@@ -30,7 +30,7 @@ CREATE TABLE cooks(
 
 CREATE TABLE users(
     username PRIMARY KEY,
-    password VARCHAR (40) NOT NULL,   
+    password VARCHAR (128) NOT NULL,
     creation_date TIMESTAMP NOT NULL,
     last_access_date TIMESTAMP NOT NULL
 );
