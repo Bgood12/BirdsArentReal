@@ -35,8 +35,8 @@ CREATE TABLE email(
 
 CREATE TABLE ingredients(
     ingredient_id SERIAL PRIMARY KEY,
-    ingredient_name varchar(225) NOT NULL,
-    aisle varchar(40)
+    ingredient_name varchar(255) NOT NULL, --name of each ingredient set to a 255 character max
+    aisle varchar(40) --name of a type (dairy, meat, etc.) set to a 40 character limit
 );
 
 CREATE TABLE authorship(
