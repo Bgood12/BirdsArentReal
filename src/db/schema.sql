@@ -1,8 +1,15 @@
 DROP TABLE IF EXISTS recipes, categories, cooks, users, email, ingredients, authorship, incorporation, pantry;
 
+CREATE TYPE DIFFICULTY AS ENUM ("very_easy", "easy", "medium", "hard", "very_hard")
+
 CREATE TABLE recipes(
     recipe_id SERIAL PRIMARY KEY,
-    ...
+    recipe_name VARCHAR(40) NOT NULL,
+	rating FLOAT(1,2) DEFAULT 0.00,
+	description VARCHAR(500) NOT NULL,
+	cook_time TIME NOT NULL,
+	steps VARCHAR(2000) NOT NULL, 
+	difficulty DIFFICULTY NOT NULL 
 );
 
 CREATE TABLE categories(
@@ -29,8 +36,8 @@ CREATE TABLE users(
 );
 
 CREATE TABLE email(
-    email PRIMARY KEY ,
-
+    email PRIMARY KEY,
+	FOREIGN KEY (username) REFERENCES users (username),
 );
 
 CREATE TABLE ingredients(
