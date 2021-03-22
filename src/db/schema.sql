@@ -64,9 +64,11 @@ CREATE TABLE incorporation(
 
 CREATE TABLE pantry(
     purchase_date TIMESTAMP PRIMARY KEY,
+    username PRIMARY KEY,
+    ingredient_id PRIMARY KEY,
     FOREIGN KEY (username) REFERENCES users (username),
     FOREIGN KEY (ingredient_id) REFERENCES ingredients (ingredient_id)
-    /*If expiration date is derived, do we represent it some special way in the table if at all?*/
-    current_quantity FLOAT,
-    quantity_bought FLOAT NOT NULL
+    expiration_date TIMESTAMP,
+    current_quantity FLOAT(4), --All items are to be measured in Stones (14lb)
+    quantity_bought FLOAT(4) NOT NULL
 );
