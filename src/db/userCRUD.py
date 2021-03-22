@@ -9,6 +9,10 @@ def createUser(username, password):
     :param password: The user's password
     :return:
     """
+    if not isUniqueUsername(username): # If the username is not unique
+        print("Proposed username isn't unique")
+        return # Do not add the entry
+
     hash = hashlib.sha256(password.encode('utf-8')).hexdigest() # The encoded password
     creation_date = datetime.datetime.now() # Also the last_access_date because it's a new account
     create_sql = "INSERT INTO users (username, password, creation_date, last_access_date)" \
@@ -40,9 +44,32 @@ def updateUser(username, password, last_access, new_username = ''):
     :param new_username: The user's new username (optional)
     :return:
     """
-    if not new_username: # If new_username hasn't been specified
+    if new_username: # If there is a new username
+        if not isUniqueUsername(new_username): # If the username is not unique
+            print("Proposed username isn't unique")
+            return # Do not update the username
+    else: # If new_username hasn't been specified
         new_username = username
 
     hash = hashlib.sha256(password.encode('utf-8')).hexdigest()  # The encoded password
     update_sql = "UPDATE users SET username = %s, password = %s, last_access_date = %s WHERE username = %s"
     exec_commit(update_sql, [new_username, hash, last_access, username])
+
+def listUsers():
+    """
+    Gets all usernames from the users table
+    :return: A tuple containing all usernames
+    """
+    exec_get_all('SELECT username FROM users')
+
+def isUniqueUsername(username) -> bool:
+    """
+    Determines if the passed username is unique
+    :param username: The username being passed in
+    :return: True if username is unique false otherwise
+    """
+    users = listUsers() # Get a list of all the users
+    for user in users[0]: # For each tuple in users
+        if user[0] == username:
+            return False # The username found a match so it is not unique
+    return True # No match was found
