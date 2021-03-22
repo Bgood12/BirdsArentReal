@@ -30,9 +30,9 @@ CREATE TABLE cooks(
 
 CREATE TABLE users(
     username PRIMARY KEY NOT NULL,
-    password VARCHAR (20) NOT NULL,   -- Set password limit to 20 characters
+    password VARCHAR (40) NOT NULL,   
     creation_date TIMESTAMP NOT NULL,
-    last_access_date DATETIME NOT NULL
+    last_access_date TIMESTAMP NOT NULL
 );
 
 CREATE TABLE email(
