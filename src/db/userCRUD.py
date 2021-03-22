@@ -15,4 +15,11 @@ def createUser(username, password):
                  "VALUES (%s, %s, %s, %s)"
     exec_commit(create_sql, [username, hash, creation_date, creation_date])
 
+def getUserByUsername(username):
+    """
+    Gets a user by their username
+    :param username: The username to look up
+    :return: A tuple containing the user's data entry
+    """
+    return exec_get_one('SELECT * FROM users WHERE username = %s', [username])
 
