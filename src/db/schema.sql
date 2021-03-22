@@ -47,17 +47,17 @@ CREATE TABLE ingredients(
 );
 
 CREATE TABLE authorship(
-    username PRIMARY KEY NOT NULL,
-    recipe_id PRIMARY KEY NOT NULL,
+    username PRIMARY KEY,
+    recipe_id PRIMARY KEY,
     creation_date TIMESTAMP NOT NULL,
     FOREIGN KEY (username) REFERENCES users (username),
     FOREIGN KEY (recipe_id) REFERENCES recipes (recipe_id)
 );
 
 CREATE TABLE incorporation(
-    recipe_id PRIMARY KEY NOT NULL,
-    ingredient_id SERIAL PRIMARY KEY,
-    quantity INT DEFAULT 0,
+    recipe_id PRIMARY KEY,
+    ingredient_id  PRIMARY KEY,
+    quantity SMALLINT DEFAULT 0,
     FOREIGN KEY (recipe_id) REFERENCES recipes (recipe_id),
     FOREIGN KEY (ingredient_id) REFERENCES ingredients (ingredient_id)
 );
