@@ -21,7 +21,7 @@ CREATE TABLE categories(
 CREATE TABLE cooks(
     username PRIMARY KEY, 
     recipe_id PRIMARY KEY,
-    creation_date PRIMARY KEY,
+    creation_date TIMESTAMP PRIMARY KEY,
     rating SMALLINT DEFAULT 0,
     servings SMALLINT DEFAULT 0, --Defaulted to 0 servings
     FOREIGN KEY (username) REFERENCES users (username),
