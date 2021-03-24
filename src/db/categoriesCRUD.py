@@ -7,7 +7,7 @@ def createCategory(recipe_id, name):
     :return:
     """
 
-    if not uniqueCategory(name):
+    if not uniqueCategory(name): # Checks if the category is unique
         print("This category has already been created.")
         return
 
@@ -37,11 +37,11 @@ def updateCategory(name, new_name = ''):
     :param newName: The categories new name to be given
     :return:
     """
-    if new_name:
-        if not uniqueCategory(new_name):
+    if new_name: # If there is a new category name
+        if not uniqueCategory(new_name): # If the category is not unique
             print("This category has already been created.")
             return
-    else:
+    else: # If a new_name hasn't been added
         new_name = name
 
     update_sql = "UPDATE categories SET name = %s"
@@ -80,9 +80,9 @@ def uniqueCategory(name) -> bool:
     :return:
     """
 
-    categories = listCategories()
-    for category in categories[0]:
+    categories = listCategories() # List of all categories
+    for category in categories[0]: # For each tuple in categories
         if category[0] == name:
-            return False
-    return True
+            return False # The name of the category is not unique
+    return True # The name of the category is unique
 
