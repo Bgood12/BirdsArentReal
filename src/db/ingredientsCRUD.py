@@ -11,8 +11,8 @@ def deleteIngredient(id):
 
 
 def editIngrdient(id, name, aisle):
-    deleteIngredient(id)
-    insertIngedient(id, name, aisle)
+    update_sql = 'UPDATE ingredients SET ingredient_name = %s, aisle = %s WHERE ingredient_id = %d'
+    exec_commit(update_sql, [name, aisle, id])
 
 
 def getIngredient(id):
