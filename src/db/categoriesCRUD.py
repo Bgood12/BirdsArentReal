@@ -57,7 +57,7 @@ def addRecipe(recipe_id, name):
     insert_sql = "INSERT INTO categories (recipe_id, name) VALUES (%d, %s)"
     exec_commit(insert_sql, [recipe_id, name])
 
-def deleteREcipe(recipe_id, name):
+def deleteRecipe(recipe_id, name):
     """
     Removes a recipe from a category
     :param recipe_id: The recipe to be removed
