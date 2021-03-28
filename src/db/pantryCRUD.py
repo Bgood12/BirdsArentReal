@@ -9,8 +9,8 @@ def addDays(purchase_date, num_days):
 
 
 def insertToPantry(purchase_date, username, ingredient_id, quantity, expiration_date):
-    insert_sql = 'INSERT INTO pantry (purchase_date, username, ingredient_id, expiration_date current_quantity, ' \
-                 'quantity_bought) VALUES (%s, %s, %d, %s, %d, %d) '
+    insert_sql = 'INSERT INTO pantry (TIMESTAMP purchase_date, username, ingredient_id, TIMESTAMP expiration_date ' \
+                 'current_quantity, quantity_bought) VALUES (%s, %s, %d, %s, %d, %d) '
     exec_commit(insert_sql, [purchase_date, username, ingredient_id, expiration_date, quantity, quantity])
 
 
