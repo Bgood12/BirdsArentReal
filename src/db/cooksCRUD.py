@@ -34,7 +34,7 @@ def recipeRequirements(recipe_id):
     :param recipe_id: The recipe being checked
     :return:
     """
-    return exec_get_one('SELECT ingredient_id FROM incorporates WHERE recipe_id = %s', [recipe_id])
+    return exec_get_one('SELECT * FROM incorporates WHERE recipe_id = %d', [recipe_id])
 
 
 def hasIngredients(username, recipe_id) -> bool:
@@ -44,7 +44,7 @@ def hasIngredients(username, recipe_id) -> bool:
     :return:
     """
 
-    pantry = exec_get_one('SELECT ingredient_id FROM pantry WHERE username = %s', [username])
+    pantry = exec_get_one('SELECT * FROM pantry WHERE username = %s', [username])
     ingredients = recipeRequirements(recipe_id)
 
     return bool(set(ingredients).intersection(pantry)) # Checks if the pantry has the needed ingredients
