@@ -28,8 +28,8 @@ def editEmail(username, oldEmail, newEmail):
     :param newEmail: The replacing email
     :return:
     """
-    deleteEmail(username, oldEmail)
-    addEmail(username, newEmail)
+    update_sql = "UPDATE email SET email = %s WHERE username = %s AND email = %s"
+    exec_commit(update_sql, [newEmail, username, oldEmail])
 
 def getEmail(username, email):
     """

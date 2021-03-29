@@ -35,13 +35,11 @@ def deleteUserByUsername(username):
     """
     exec_commit('DELETE FROM users WHERE username = %s', [username])
 
-def updateUser(username, password, last_access, new_username = ''):
+def updateUsername(old_username, new_username):
     """
-    Updates a user entry
-    :param username: The username to identify the use entry with
-    :param password: The user's new password
-    :param last_access: The last time the user account has been accessed
-    :param new_username: The user's new username (optional)
+    Updates the username of a user entry
+    :param old_username: The old username, for identifying the entry
+    :param new_username: The new username
     :return:
     """
     if new_username: # If there is a new username
@@ -49,11 +47,31 @@ def updateUser(username, password, last_access, new_username = ''):
             print("Proposed username isn't unique")
             return # Do not update the username
     else: # If new_username hasn't been specified
-        new_username = username
+        new_username = old_username
 
+    update_sql = "UPDATE users SET username = %s WHERE username = %s"
+    exec_commit(update_sql, [new_username, old_username])
+
+def updatePassword(username, password):
+    """
+    Updates the password of a user's user account
+    :param username: The username identifying the account
+    :param password: The new password
+    :return:
+    """
     hash = hashlib.sha256(password.encode('utf-8')).hexdigest()  # The encoded password
-    update_sql = "UPDATE users SET username = %s, password = %s, last_access_date = %s WHERE username = %s"
-    exec_commit(update_sql, [new_username, hash, last_access, username])
+    update_sql = "UPDATE users SET password = %s WHERE username = %s"
+    exec_commit(update_sql, [hash, username])
+
+def updateLastAccess(username, last_access):
+    """
+    Updates the user's last access date
+    :param username: The username identifying the account
+    :param last_access: The last access date
+    :return:
+    """
+    update_sql = "UPDATE users SET last_access_date = %s WHERE username = %s"
+    exec_commit(update_sql, [last_access, username])
 
 def listUsers():
     """
