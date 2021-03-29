@@ -16,6 +16,6 @@ def editIngrdient(id, name, aisle):
 
 
 def getIngredient(id):
-    exec_get_one('SELECT * FROm ingredients WHERE ingredient_id = %d', [id])
+    return exec_get_one('SELECT * FROm ingredients WHERE ingredient_id = %d', [id])
 
 
