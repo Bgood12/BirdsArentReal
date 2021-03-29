@@ -9,11 +9,11 @@ def createAuthorship(username, recipe_id):
 
 def getAuthorshipByID(recipe_id):
     get_sql = "SELECT * FROM authorship WHERE recipe_id = %d"
-    exec_get_one(get_sql, [recipe_id])
+    return exec_get_one(get_sql, [recipe_id])
 
 def getAuthorshipsByName(username):
     get_sql = "SELECT * FROM authorship WHERE username = %s"
-    exec_get_all(get_sql, [username])
+    return exec_get_all(get_sql, [username])
 
 def deleteAuthorship(recipe_id):
     delete_sql = "DELETE FROM categories WHERE recipe_id = %d"

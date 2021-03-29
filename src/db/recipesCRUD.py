@@ -2,7 +2,7 @@ from src.db.db_utils import *
 
 def createRecipe(name, description, cook_time, steps, difficulty):
     create_sql = "INSERT INTO recipes (recipe_name, description, cook_time, steps, difficulty)" \
-                 "VALUES (%s, %s, %s, %s, %s)"
+                 "VALUES (%s, %s, %d, %s, %s)"
     exec_commit(create_sql, [name, description, cook_time, steps, difficulty])
                  
 def getRecipeByID(id):
@@ -34,7 +34,7 @@ def updateRecipeDescription(id, description):
     exec_commit(update_sql, [description, id])
 
 def updateRecipeCookTime(id, cook_time):
-    update_sql = "UPDATE recipes SET cook_time = %s WHERE recipe_id = %d"
+    update_sql = "UPDATE recipes SET cook_time = %d WHERE recipe_id = %d"
     exec_commit(update_sql, [cook_time, id])
 
 def updateRecipeSteps(id, steps):

@@ -6,11 +6,15 @@ def createIncorporation(recipe_id, ingredient_id, quantity):
 
 def getIncorporationsByRecipeID(recipe_id):
     get_sql = "SELECT * FROM incorporations WHERE recipe_id = %d"
-    exec_get_one(get_sql, [recipe_id])
+    return exec_get_all(get_sql, [recipe_id])
 
 def getIncorporationsByIngredientID(ingredient_id):
     get_sql = "SELECT * FROM incorporations WHERE ingredient_id = %d"
-    exec_get_one(get_sql, [ingredient_id])
+    return exec_get_all(get_sql, [ingredient_id])
+
+def getIncorporation(recipe_id, ingredient_id):
+    get_sql = "SELECT * FROM incorporations WHERE recipe_id = %d AND ingredient_id = %d"
+    return exec_get_all(get_sql, [recipe_id, ingredient_id])    
 
 def deleteIncorporation(recipe_id, ingredient_id):
     delete_sql = "DELETE FROM incorporation WHERE recipe_id = %d AND ingredient_id = %d"
