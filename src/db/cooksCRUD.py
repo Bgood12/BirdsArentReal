@@ -11,14 +11,32 @@ def cookRecipe(username, recipe_id, rating, servings):
     :param servings: The amount of servings cooked
     :return:
     """
-    if not hasIngredients(username):
-        print("The user does not have enough ingredients to cook this recipe")
-        return
-
     creation_date = datetime.datetime.now() # The date the recipe was cooked
     create_sql = "INSERT INTO cooks (creation_date, username, recipe_id, rating, servings)"\
                  "VALUES (%s, %s, %d, %d, %d)"
     exec_commit(create_sql, [creation_date, username, recipe_id, rating, servings])
+    
+def updateRating(username, recipe_id, new_rating):
+    """
+    User updates their rating for a recipe.
+    :param username: The user updating the rating
+    :param recipe_id: The recipe being rated
+    :param new_rating: The new rating
+    :return:
+    """
+    update_sql = "UPDATE cooks SET rating = %d WHERE rating = %d"
+    exec_commit(update_sql, [new_rating, username])
+
+def updateServings(username, recipe_id, new_servings):
+    """
+    User updates their servings for a recipe.
+    :param username: The user updating the rating
+    :param recipe_id: The recipe being rated
+    :param new_rating: The new servings
+    :return:
+    """
+    update_sql = "UPDATE cooks SET servings = %d WHERE servings = %d"
+    exec_commit(update_sql, [new_servings, username])    
 
 def listCookedRecipes(username):
     """
@@ -26,28 +44,8 @@ def listCookedRecipes(username):
     :param username: The name to search ccoked recipes history
     :return:
     """
-    exec_get_all('SELECT username FROM cooks')
+    return exec_get_all('SELECT username FROM cooks')
 
-def recipeRequirements(recipe_id):
-    """
-    List the recipe ingredient requirements
-    :param recipe_id: The recipe being checked
-    :return:
-    """
-    return exec_get_one('SELECT * FROM incorporates WHERE recipe_id = %d', [recipe_id])
-
-
-def hasIngredients(username, recipe_id) -> bool:
-    """
-    Checks if the user has enough ingredients to cook recipe
-    :param username: Name of the user checking ingredient requirements
-    :return:
-    """
-
-    pantry = exec_get_one('SELECT * FROM pantry WHERE username = %s', [username])
-    ingredients = recipeRequirements(recipe_id)
-
-    return bool(set(ingredients).intersection(pantry)) # Checks if the pantry has the needed ingredients
 
 
 
