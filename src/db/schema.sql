@@ -1,43 +1,46 @@
 DROP TABLE IF EXISTS recipes, categories, cooks, users, email, ingredients, authorship, incorporation, pantry;
 
-CREATE TYPE DIFFICULTY AS ENUM ("very_easy", "easy", "medium", "hard", "very_hard")
+CREATE TYPE DIFFICULTY AS ENUM ('very_easy', 'easy', 'medium', 'hard', 'very_hard');
 
 CREATE TABLE recipes(
     recipe_id SERIAL PRIMARY KEY,
     recipe_name VARCHAR(40) NOT NULL,
-	rating FLOAT(1,2) DEFAULT 0.00,
-	description VARCHAR(500) NOT NULL,
-	cook_time TIME NOT NULL,
-	steps VARCHAR(2000) NOT NULL, 
-	difficulty DIFFICULTY NOT NULL 
+    rating FLOAT(2) DEFAULT 0.00,
+    description VARCHAR(500) NOT NULL,
+    cook_time INTEGER NOT NULL,
+    steps VARCHAR(2000) NOT NULL, 
+    difficulty DIFFICULTY DEFAULT 'medium' 
+);
+
+CREATE TABLE users(
+    username SERIAL PRIMARY KEY,
+    password VARCHAR (40) NOT NULL,   
+    creation_date TIMESTAMP NOT NULL,
+    last_access_date TIMESTAMP NOT NULL
 );
 
 CREATE TABLE categories(
-    recipe_id PRIMARY KEY,
+    recipe_id SERIAL PRIMARY KEY,
     name VARCHAR(40) NOT NULL, 
     FOREIGN KEY (recipe_id) REFERENCES recipes (recipe_id)
 );
 
 CREATE TABLE cooks(
-    username PRIMARY KEY, 
-    recipe_id PRIMARY KEY,
-    creation_date TIMESTAMP PRIMARY KEY,
+    username SERIAL, 
+    recipe_id SERIAL,
+    creation_date TIMESTAMP,
+    PRIMARY KEY (username, recipe_id, creation_date),
     rating SMALLINT DEFAULT 0,
     servings SMALLINT DEFAULT 0, --Defaulted to 0 servings
     FOREIGN KEY (username) REFERENCES users (username),
     FOREIGN KEY (recipe_id) REFERENCES recipes (recipe_id)
 );
 
-CREATE TABLE users(
-    username PRIMARY KEY,
-    password VARCHAR (128) NOT NULL,
-    creation_date TIMESTAMP NOT NULL,
-    last_access_date TIMESTAMP NOT NULL
-);
-
 CREATE TABLE email(
-    email PRIMARY KEY,
-	FOREIGN KEY (username) REFERENCES users (username),
+    email SERIAL,
+    username SERIAL,
+    PRIMARY KEY (email, username),
+    FOREIGN KEY (username) REFERENCES users (username)
 );
 
 CREATE TABLE ingredients(
@@ -47,27 +50,30 @@ CREATE TABLE ingredients(
 );
 
 CREATE TABLE authorship(
-    username PRIMARY KEY,
-    recipe_id PRIMARY KEY,
+    username SERIAL,
+    recipe_id SERIAL,
+    PRIMARY KEY (username, recipe_id),
     creation_date TIMESTAMP NOT NULL,
     FOREIGN KEY (username) REFERENCES users (username),
     FOREIGN KEY (recipe_id) REFERENCES recipes (recipe_id)
 );
 
 CREATE TABLE incorporation(
-    recipe_id PRIMARY KEY,
-    ingredient_id  PRIMARY KEY,
+    recipe_id SERIAL,
+    ingredient_id SERIAL,
+    PRIMARY KEY (recipe_id, ingredient_id),
     quantity SMALLINT DEFAULT 0,
     FOREIGN KEY (recipe_id) REFERENCES recipes (recipe_id),
     FOREIGN KEY (ingredient_id) REFERENCES ingredients (ingredient_id)
 );
 
 CREATE TABLE pantry(
-    purchase_date TIMESTAMP PRIMARY KEY,
-    username PRIMARY KEY,
-    ingredient_id PRIMARY KEY,
+    purchase_date TIMESTAMP,
+    username SERIAL,
+    ingredient_id SERIAL,
+    PRIMARY KEY (purchase_date, username, ingredient_id),
     FOREIGN KEY (username) REFERENCES users (username),
-    FOREIGN KEY (ingredient_id) REFERENCES ingredients (ingredient_id)
+    FOREIGN KEY (ingredient_id) REFERENCES ingredients (ingredient_id),
     expiration_date TIMESTAMP,
     current_quantity FLOAT(4), --All items are to be measured in Stones (14lb)
     quantity_bought FLOAT(4) NOT NULL
