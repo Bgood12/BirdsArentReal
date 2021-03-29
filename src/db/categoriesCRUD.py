@@ -71,7 +71,7 @@ def listCategories():
     Gets all the categories from the category table
     :return: A tuple containing all category names
     """
-    exec_get_all('SELECT name FROM categories')
+    return exec_get_all('SELECT name FROM categories')
 
 def uniqueCategory(name) -> bool:
     """
