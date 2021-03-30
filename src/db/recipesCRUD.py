@@ -41,6 +41,6 @@ def updateRecipeSteps(id, steps):
     update_sql = "UPDATE recipes SET steps = %s WHERE recipe_id = %d"
     exec_commit(update_sql, [steps, id])
 
-def updateRecipeSteps(id, difficulty):
+def updateRecipeDifficulty(id, difficulty):
     update_sql = "UPDATE recipes SET difficulty = %s WHERE recipe_id = %d"
     exec_commit(update_sql, [difficulty, id])
