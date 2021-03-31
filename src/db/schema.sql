@@ -4,7 +4,7 @@ CREATE TYPE DIFFICULTY AS ENUM ('very_easy', 'easy', 'medium', 'hard', 'very_har
 
 CREATE TABLE recipes(
     recipe_id SERIAL PRIMARY KEY,
-    recipe_name VARCHAR(40) NOT NULL,
+    recipe_name VARCHAR(100) NOT NULL,
     rating FLOAT(2) DEFAULT 0.00,
     description VARCHAR(500) NOT NULL,
     cook_time INTEGER NOT NULL,
