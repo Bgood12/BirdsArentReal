@@ -73,6 +73,9 @@ def listCategories():
     """
     return exec_get_all('SELECT name FROM categories')
 
+def listRecipes(name):
+    return exec_get_all('SELECT recipe_id FROM categories where name = %s', [name])
+
 def uniqueCategory(name) -> bool:
     """
     Checks if the category name is unique
