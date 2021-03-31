@@ -30,9 +30,15 @@ def editPantry(purchase_date, username, ingredient_id, expiration_date, current_
 
 def useIngredientFromPantry(purchase_date, username, ingredient_id, quantity_used):
     # use an amount of a given ingredient
-    update_sql = 'UPDATE pantry SET current_quantity = current_quantity - %d WHERE purchase_date = %s AND username = ' \
+    ingredient = getPantryEntry(purchase_date, username, ingredient_id)
+    if quantity_used >= ingredient[4]:
+        deleteFromPantry(purchase_date, username, ingredient_id)
+        return quantity_used - ingredient[4]
+    else:
+        update_sql = 'UPDATE pantry SET current_quantity = current_quantity - %d WHERE purchase_date = %s AND username = ' \
                  '%s AND ingredient_id = %d '
-    exec_commit(update_sql, [quantity_used, purchase_date, username, ingredient_id])
+        exec_commit(update_sql, [quantity_used, purchase_date, username, ingredient_id])
+        return 0
 
 
 def getPantryEntry(purchase_date, username, ingredient_id):
@@ -46,6 +52,7 @@ def getPantryByUser(username):
     select_sql = 'SELECT * FROM pantry WHERE username = %s'
     return exec_get_all(select_sql, [username])
 
+
 def getAmountOfIngredient(username, ingredient_id):
     # get the amount of an ingredient in the user's pantry regardless of purchase date
     select_sql = 'SELECT current_quantity FROM pantry WHERE username = %s AND ingredient_id = %d'
@@ -54,3 +61,13 @@ def getAmountOfIngredient(username, ingredient_id):
     for quantity in amounts:
         total_quantity += quantity[0]
     return total_quantity
+
+
+def useIngredientByClosestExpirationDate(username, ingredient_id, quantity):
+    select_sql = 'SELECT * FROM pantry WHERE username = %s AND ingredient_id = %d'
+    entries = exec_get_all(select_sql, [username, ingredient_id])
+    entries.sort(key=lambda x:x[3]) # should sort by expiration date
+    i = 0
+    while quantity > 0:
+        entry = entries[i]
+        quantity = useIngredientFromPantry(entry[0], username, ingredient_id, quantity)
