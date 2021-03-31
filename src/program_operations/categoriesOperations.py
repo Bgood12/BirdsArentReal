@@ -23,5 +23,7 @@ def listAllCategories():
 
 def listAllRecipes(name):
     recipes = listRecipes(name)
-    print(recipes)
+    recipes.sort()
+    for recipe in recipes:
+        print(recipe)
 
