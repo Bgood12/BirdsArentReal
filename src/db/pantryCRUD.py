@@ -45,3 +45,12 @@ def getPantryByUser(username):
     # get the entire pantry of a user
     select_sql = 'SELECT * FROM pantry WHERE username = %s'
     return exec_get_all(select_sql, [username])
+
+def getAmountOfIngredient(username, ingredient_id):
+    # get the amount of an ingredient in the user's pantry regardless of purchase date
+    select_sql = 'SELECT current_quantity FROM pantry WHERE username = %s AND ingredient_id = %d'
+    amounts = exec_get_all(select_sql, [username, ingredient_id])
+    total_quantity = 0
+    for quantity in amounts:
+        total_quantity += quantity[0]
+    return total_quantity
