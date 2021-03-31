@@ -1,6 +1,6 @@
 from src.db.db_utils import *
 
-def createCategory(name):
+def createCategory(recipe_id, name):
     """
     Creates a new category of recipes
     :param name: The name of the category being created
@@ -12,7 +12,7 @@ def createCategory(name):
         return
 
     create_sql = "INSERT INTO categories (recipe_id, name) VALUES (%d, %s)"
-    exec_commit(create_sql, [name])
+    exec_commit(create_sql, [recipe_id, name])
 
 def getCategoryByName(name):
     """
