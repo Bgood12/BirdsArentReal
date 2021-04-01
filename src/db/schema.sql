@@ -50,7 +50,7 @@ CREATE TABLE ingredients(
 );
 
 CREATE TABLE authorship(
-    username SERIAL,
+    username VARCHAR(100),
     recipe_id SERIAL,
     PRIMARY KEY (username, recipe_id),
     creation_date TIMESTAMP NOT NULL,
