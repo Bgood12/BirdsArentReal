@@ -25,7 +25,7 @@ def updateRating(username, recipe_id, new_rating):
     :return:
     """
     update_sql = "UPDATE cooks SET rating = %d WHERE rating = %d"
-    exec_commit(update_sql, [new_rating, username])
+    exec_commit(update_sql, [new_rating, cooks])
 
 def updateServings(username, recipe_id, new_servings):
     """
@@ -36,7 +36,7 @@ def updateServings(username, recipe_id, new_servings):
     :return:
     """
     update_sql = "UPDATE cooks SET servings = %d WHERE servings = %d"
-    exec_commit(update_sql, [new_servings, username])    
+    exec_commit(update_sql, [new_servings, cooks])    
 
 def listCookedRecipes(username):
     """
