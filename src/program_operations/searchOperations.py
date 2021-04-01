@@ -14,7 +14,19 @@ def searchRecipe(key):
             recipes = listAllRecipes(search)
             for recipe in recipes:
                 print(recipe)
-            recipeChoice = input("Please choose a recipe by name: ")
+            check = False
+            
+            while(check == False):
+                recipeChoice = input("Please choose a recipe by name: ")
+                for recipe in recipes:
+                    if recipeChoice == recipe:
+                        check = True;
+                        break;
+                    else:
+                        check = False;
+                if check ==False:
+                    print("Recipe not in category list")
+                    
             result = getRecipesByName(recipeChoice)
             print(result)
 
@@ -27,12 +39,18 @@ def searchRecipe(key):
         search = input("Enter name of ingredient: ")
         nameToId = getIngredient(search)[1]  # The ingredient_ids
         ingredToRecipe = extract(getIncorporationByIngredientID(nameToId))  # The recipe_ids
-
-        for recipe in ingredToRecipe:
+        recipes = []
+        extract(getRecipesById)
+        
+        for name in ingredToRecipe:
+            recipeName = extract(getRecipesById(name)
+            recipes.append(recipeName)
+        
+        for recipe in recipes:
             print(recipe)
 
-        recipeChoice = input ("Please choose a recipe by ID: ") #till i figure out how to get names instead
-        result = getRecipesByID(recipeChoice)
+        recipeChoice = input ("Please choose a recipe by name: ") 
+        result = getRecipesByName(recipeChoice)
         print(result)
 
 
