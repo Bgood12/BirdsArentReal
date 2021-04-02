@@ -11,7 +11,7 @@ def addDays(purchase_date, num_days):
 def insertToPantry(purchase_date, username, ingredient_id, quantity, expiration_date):
     # insert a new value into the pantry
     insert_sql = 'INSERT INTO pantry (TIMESTAMP purchase_date, username, ingredient_id, TIMESTAMP expiration_date ' \
-                 'current_quantity, quantity_bought) VALUES (%s, %s, %d, %s, %d, %d) '
+                 'current_quantity, quantity_bought) VALUES (%s, %s, %d, %s, %f, %f) '
     exec_commit(insert_sql, [purchase_date, username, ingredient_id, expiration_date, quantity, quantity])
 
 
@@ -23,7 +23,7 @@ def deleteFromPantry(purchase_date, username, ingredient_id):
 def editPantry(purchase_date, username, ingredient_id, expiration_date, current_quantity, quantity_bought):
     # update all data for a pantry entry. This is mainly for fixing errors in the pantry.
     update_sql = 'UPDATE pantry SET purchase_date = %s, username = %s, ingredient_id = %d, expiration_date = %s, ' \
-                 'current_quantity = %d, quantity_bought = %d WHERE purchase_date = %s AND username = %s AND ' \
+                 'current_quantity = %f, quantity_bought = %f WHERE purchase_date = %s AND username = %s AND ' \
                  'ingredient_id = %d '
     exec_commit(update_sql, [purchase_date, username, ingredient_id, expiration_date, current_quantity, quantity_bought, purchase_date, username, ingredient_id])
 
@@ -35,7 +35,7 @@ def useIngredientFromPantry(purchase_date, username, ingredient_id, quantity_use
         deleteFromPantry(purchase_date, username, ingredient_id)
         return quantity_used - ingredient[4]
     else:
-        update_sql = 'UPDATE pantry SET current_quantity = current_quantity - %d WHERE purchase_date = %s AND username = ' \
+        update_sql = 'UPDATE pantry SET current_quantity = current_quantity - %f WHERE purchase_date = %s AND username = ' \
                  '%s AND ingredient_id = %d '
         exec_commit(update_sql, [quantity_used, purchase_date, username, ingredient_id])
         return 0
