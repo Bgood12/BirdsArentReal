@@ -37,13 +37,12 @@ def searchRecipe(key):
 
     elif key == "ingredients":
         search = input("Enter id of ingredient: ")
-        nameToId = int(search)  # The ingredient_ids
         ingredToRecipe = extract(getIncorporationsByIngredientID(nameToId))  # The recipe_ids
-        recipes = []
-        extractFirst(getRecipesByID)
+        print(ingredToRecipe) # Check recipe ids
+        recipes = ()
         
         for name in ingredToRecipe:
-            recipeName = extract(getRecipesById(name))
+            recipeName = extractFirst(getRecipesById(name))
             recipes.append(recipeName)
         
         for recipe in recipes:
