@@ -10,10 +10,9 @@ currentUser = None  # global variable for storing the current user
 def helpcmd(loggedin):
     # displays list of currently available commands
     if loggedin:
-        print(
-            "Available commands:\nq - quits the application\nhelp - display available commands\nlogout - logs the current user out")
+        print("Available commands:\nquit - quits the application\nhelp - display available commands\nlogout - logs the current user out")
     else:
-        helpmessage = "Available commands:\nq - quits the application\nhelp - display available commands\nlogin [username] [password] - logs the " \
+        helpmessage = "Available commands:\nquit - quits the application\nhelp - display available commands\nlogin [username] [password] - logs the " \
                       "users into their accounts\nregister [username] [password] - registers a new user account\n"
         print(helpmessage)
 
@@ -23,7 +22,7 @@ def parseInput(inputStr):
     global currentUser
     if command[0] == "help":
         helpcmd(currentUser is not None)
-    # account operations
+    # ACCOUNT OPERATIONS
     if currentUser is None or not currentUser.isLoggedIn():
         if command[0] == "login" and len(command) == 3:
             currentUser = login(command[1], command[2])
@@ -32,19 +31,45 @@ def parseInput(inputStr):
     else:
         if command[0] == "logout":
             currentUser.logout()
+
+        # RECIPE OPERATIONS
+        # CREATE A RECIPE
         elif command[0] == "createRecipe":
-            # beginning of recipe operations
-            recipeName = inputStr[12:]
+            recipeName = input("Enter the name of your new recipe: ")
             description = input("Enter a description: ")
             cook_time = float(input("Prep time in minutes: "))
             steps = input("What steps does it take to prepare? ")
             difficulty = input("How hard is it to prepare [very_easy to very_hard]? ")
             newRecipe(currentUser, recipeName, description, cook_time, steps, difficulty)
         elif command[0] == "editRecipe":
-            recipeID = int(command[1])
-            # TODO add prompt for which part of the recipe is being edited, then a prompt for the new value
-        # TODO recipe operations: getMyRecipes (to view ids of recipes by the user), deleteRecipe [id]
-        # TODO createCategoryForRecipe [recipeID] [new-category], assignToCategory [recipeID] [category]
+            recipeID = int(input("Enter the ID of the recipe you would like to edit: "))
+            field = 'taco'
+            while not (field == 'name' or field == 'description' or field == 'cook_time' or field == 'steps' or field == 'difficulty' or field == 'cancel'):
+                field = input("Enter the field you wish to edit [name,description,cook_time,steps,difficulty]: ")
+            if field == 'name':
+                newName = input("Enter the new name of this recipe: ")
+                changeRecipeName(currentUser, recipeID, newName)
+            elif field == 'description':
+                newDescription = input("Enter the new description of this recipe: ")
+                changeRecipeDescription(currentUser, recipeID, newDescription)
+            elif field == 'cook_time':
+                newCookTime = int(input("Enter the revised cook time: "))
+                changeRecipeCookTime(currentUser, recipeID, newCookTime)
+            elif field == 'steps':
+                newSteps = input("Enter a revised series of steps: ")
+                changeRecipeSteps(currentUser, recipeID, newSteps)
+            elif field == 'difficulty':
+                dif = 'very_medium' # the most premium difficulty
+                while not (dif == 'very_easy' or dif == 'easy' or dif == 'medium' or dif == 'hard' or dif == 'very_hard'):
+                    dif = input("Enter the new difficulty rating of this recipe: ")
+                changeRecipeDifficulty(currentUser, recipeID, dif)
+        elif command[0] == "deleteRecipe":
+            recipeID = int(input("Enter the recipe you wish to delete: "))
+            deleteMyRecipe(currentUser, recipeID)
+        elif command[0] == "getMyRecipes":
+            printMyRecipes(currentUser)
+
+        # CATEGORY OPERATIONS
         # CREATE CATEGORY
         elif command[0] == "createCategory":
             categoryName = input("Enter the name of the category: ")
@@ -86,7 +111,8 @@ def parseInput(inputStr):
                 key = input("Incorrect format please try again [categories, name, ingredients]: ")
             searchRecipe(key)
 
-        # TODO cooking the recipe related operations
+        # COOKING RELATED OPERATIONS
+        # COOK A RECIPE
         elif command[0] == "cookRecipe":
             recipeID = int(input("Enter the ID of the recipe you wish to make: "))
             scalar = float(input("Enter the number by which you multiplied the recipe's ingredients: "))
@@ -96,22 +122,27 @@ def parseInput(inputStr):
             elif rating > 5:
                 rating = 5
             makeRecipe(recipeID, currentUser.getUser(), scalar, rating)
+        # TELLS THE USER IF THEY CAN MAKE A RECIPE
         elif command[0] == "canIMake":
             recipeID = int(input("Enter the ID of the recipe you wish to make: "))
             scalar = float(input("How many times would you like to make this recipe: "))
-            if(recipeCanBeMade(recipeID, scalar)):
+            if recipeCanBeMade(recipeID, scalar):
                 print("You have everything you need to make that volume of this recipe")
             else:
                 print("You lack the required ingredients to make that volume of this recipe")
-        # TODO user pantry operations
+
+        # PANTRY OPERATIONS
+        # PRINTS THE USER'S PANTRY
         elif command[0] == "getMyPantry":
             printMyPantryStr(currentUser.getUser())
+        # ADDS AN INGREDIENT TO THE USER'S PANTRY
         elif command[0] == "addIngredientToPantry":
             purchaseDate = datetime.datetime.now()
             ingrID = int(input("Enter the Ingredient ID: "))
             quantity = float(input("Enter the quantity purchased"))
             expirationDate = addDays(purchaseDate, int(input("Enter the number of days before it expires")))
             insertToPantry(purchaseDate, currentUser.getUser(), ingrID, quantity, expirationDate)
+        # REMOVES AN INGREDIENT FROM THE USER'S PANTRY
         elif command[0] == "deletePantryEntry":
             ingrID = int(input("Enter the ID of the ingredient you wish to delete: "))
             purchstr = "Enter the purchase date in this format: yyyy-mm-dd hh:mm-ss"
