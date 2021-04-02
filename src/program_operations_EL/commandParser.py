@@ -104,7 +104,7 @@ def parseInput(inputStr):
             recipeId = int(input("Enter the id of the recipe to add: "))
             addNewRecipe(recipeId, categoryName)
 
-       # DELETE RECIPE IN CATEGORY
+        # DELETE RECIPE IN CATEGORY
         elif command[0] == "deleteRecipeInCategory":
             categoryName = input("Enter name of category to delete from: ")
             recipeId = int(input("Enter the id of the recipe to delete: "))
@@ -158,4 +158,6 @@ def parseInput(inputStr):
         # MEME OPERATIONS
         elif command[0] == "rr" or command[0] == "rickroll":
             rickRoll()
+        elif command[0] == "sb" or command[0] == "stickbug":
+            stickbug()
 
