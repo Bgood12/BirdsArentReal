@@ -32,5 +32,6 @@ def printMyPantryStr(username):
     pantry = getPantryByUser(username)
     for ingr in pantry:
         ingredient = getIngredient(ingr[2])
-        stringToPrint = "id:" + ingr[2] + ", quantity left: " + ingr[4] + " of " + ingr[5] + ", name: " + ingredient[1] + ", dates: " + ingr[0] + " to " + ingr[3]
+        stringToPrint = "id:" + str(ingr[2]) + ", quantity left: " + str(ingr[4]) + " of " + str(ingr[5]) + ", name: " \
+                        + str(ingredient[1]) + ", dates: " + str(ingr[0]) + " to " + str(ingr[3])
         print(stringToPrint)
