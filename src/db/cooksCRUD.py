@@ -24,8 +24,10 @@ def updateRating(username, recipe_id, new_rating):
     :param new_rating: The new rating
     :return:
     """
-    update_sql = "UPDATE cooks SET rating = %d WHERE rating = %d"
-    exec_commit(update_sql, [new_rating, username])
+    update_sql = "UPDATE recipe_id SET rating = %d WHERE rating = %d"
+    user_cook = exec_get_one('SELECT * FROM cooks WHERE username = %s', [username])
+    recipe = exec_get_one('SELECT * FROM user_cook WHERE recipe_id = %d', [recipe_id])
+    exec_commit(update_sql, [new_rating, recipe])
 
 def updateServings(username, recipe_id, new_servings):
     """
@@ -35,8 +37,10 @@ def updateServings(username, recipe_id, new_servings):
     :param new_rating: The new servings
     :return:
     """
-    update_sql = "UPDATE cooks SET servings = %d WHERE servings = %d"
-    exec_commit(update_sql, [new_servings, username])    
+    update_sql = "UPDATE recipe_id SET servings = %d WHERE servings = %d"
+    user_cook = exec_get_one('SELECT * FROM cooks WHERE username = %s', [username])
+    recipe = exec_get_one('SELECT * FROM user_cook WHERE recipe_id = %d', [recipe_id])
+    exec_commit(update_sql, [new_servings, recipe])    
 
 def listCookedRecipes(username):
     """
@@ -44,7 +48,7 @@ def listCookedRecipes(username):
     :param username: The name to search ccoked recipes history
     :return:
     """
-    return exec_get_all('SELECT username FROM cooks')
+    return exec_get_all('SELECT username FROM cooks', [username])
 
 
 

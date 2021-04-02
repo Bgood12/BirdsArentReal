@@ -13,8 +13,8 @@ CREATE TABLE recipes(
 );
 
 CREATE TABLE users(
-    username SERIAL PRIMARY KEY,
-    password VARCHAR (40) NOT NULL,   
+    username VARCHAR (100) PRIMARY KEY,
+    password VARCHAR (100) NOT NULL,   
     creation_date TIMESTAMP NOT NULL,
     last_access_date TIMESTAMP NOT NULL
 );
@@ -26,7 +26,7 @@ CREATE TABLE categories(
 );
 
 CREATE TABLE cooks(
-    username SERIAL, 
+    username VARCHAR(100), 
     recipe_id SERIAL,
     creation_date TIMESTAMP,
     PRIMARY KEY (username, recipe_id, creation_date),
@@ -37,8 +37,8 @@ CREATE TABLE cooks(
 );
 
 CREATE TABLE email(
-    email SERIAL,
-    username SERIAL,
+    email VARCHAR(100),
+    username VARCHAR(100),
     PRIMARY KEY (email, username),
     FOREIGN KEY (username) REFERENCES users (username)
 );
@@ -50,7 +50,7 @@ CREATE TABLE ingredients(
 );
 
 CREATE TABLE authorship(
-    username SERIAL,
+    username VARCHAR(100),
     recipe_id SERIAL,
     PRIMARY KEY (username, recipe_id),
     creation_date TIMESTAMP NOT NULL,
@@ -69,7 +69,7 @@ CREATE TABLE incorporation(
 
 CREATE TABLE pantry(
     purchase_date TIMESTAMP,
-    username SERIAL,
+    username VARCHAR(100),
     ingredient_id SERIAL,
     PRIMARY KEY (purchase_date, username, ingredient_id),
     FOREIGN KEY (username) REFERENCES users (username),

@@ -20,6 +20,7 @@ class CurrentUser():
 
 def createAccount(username, password):
     createUser(username, password)
+    print("User has been created")
 
 
 def login(username, password):
@@ -33,6 +34,7 @@ def login(username, password):
     user = exec_get_one("SELECT username FROM users WHERE username = %s AND password = %s", [username, hash])
     if user[0] == username:
         updateLastAccess(username, datetime.datetime.now())
+        print("User: " + username + "is logged in")
         return CurrentUser.__init__(username=username)
     else:
         print("Invalid username or password")
@@ -41,6 +43,7 @@ def login(username, password):
 def logout(curUser: CurrentUser):
     updateLastAccess(curUser.getUser(), datetime.datetime.now())
     curUser.logout()
+    print(curUser.getUser() + " has been logged out")
 
 
 def _pwHash(pw):
