@@ -11,7 +11,7 @@ def searchRecipe(key):
             print("This category does not exist.\n")
             return
         else:
-            recipes = listAllRecipes(search)
+            recipes = listAllInCategory(search, CurrentUser.getUser())
             for recipe in recipes:
                 print(recipe)
             check = False

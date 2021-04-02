@@ -3,29 +3,23 @@ from src.program_operations.accountOperations import *
 
 def createNewCategory(currentUser: CurrentUser, recipe_id, name):
     if currentUser.isLoggedIn():
-        x = createCategory(recipe_id, name)[1]
+        x = createCategory(username, name)[1]
         print(x, "category has been created")
     else:
         print("No user logged in to create a category")
 
-def deleteCategory(name):
-    deleteCategoryByName(name)
-    
-def addNewRecipe(recipe_id, name):
-    addRecipe(recipe_id, name)
+def deleteCategory(username, category_name):
+    deleteCategoryByName(username, category_name)
 
-def deleteOldRecipe(recipe_id, name):
-    deleteRecipe(recipe_id, name)
-
-def changeCategoryName(name, new_name):
-    updateCategory(name, new_name)
-
-def listAllCategories():
-    cat = listCategories()
+def listAllCategories(username):
+    cat = listCategoriesByUser(username)
     print(cat)
 
-def listAllRecipes(name):
-    recipes = listRecipes(name)
-    recipes.sort()
-    return recipes
+def addToCategory(recipe_id, category_name, username):
+    addRecipeToCategory(recipe_id, category_name, username)
 
+def deleteFromCategory(recipe_id, category_name, username):
+    deleteRecipeFromCategory(recipe_id, category_name, username)
+
+def listAllInCategory(category_name, username):
+    listRecipesByCategory(category_name, username)
