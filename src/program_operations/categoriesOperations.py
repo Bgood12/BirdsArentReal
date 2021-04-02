@@ -8,6 +8,9 @@ def createNewCategory(currentUser: CurrentUser, recipe_id, name):
     else:
         print("No user logged in to create a category")
 
+def deleteCategory(name):
+    deleteCategoryByName(name)
+    
 def addNewRecipe(recipe_id, name):
     addRecipe(recipe_id, name)
 
