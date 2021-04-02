@@ -4,7 +4,7 @@ import datetime
 def createAuthorship(username, recipe_id):
     creation_date = datetime.datetime.now()
 
-    create_sql = "INSERT INTO authorship (username, recipe_id, creation_date) VALUES (%s, %d, %s)"
+    create_sql = "INSERT INTO authorship (username, recipe_id, creation_date) VALUES (%s, %s, %s)"
     exec_commit(create_sql, [username, recipe_id, creation_date])
 
 def getAuthorshipByID(recipe_id):

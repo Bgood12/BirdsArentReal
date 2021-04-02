@@ -35,7 +35,7 @@ def parseInput(inputStr):
             createAccount(username, password)
     else:
         if command[0] == "logout":
-            currentUser.logout()
+            logout(currentUser)
 
         # RECIPE OPERATIONS
         # CREATE A RECIPE
@@ -44,8 +44,10 @@ def parseInput(inputStr):
             description = input("Enter a description: ")
             cook_time = float(input("Prep time in minutes: "))
             steps = input("What steps does it take to prepare? ")
-            difficulty = input("How hard is it to prepare [very_easy to very_hard]? ")
-            newRecipe(currentUser, recipeName, description, cook_time, steps, difficulty)
+            dif = 'very_medium'  # the most premium difficulty
+            while not (dif == 'very_easy' or dif == 'easy' or dif == 'medium' or dif == 'hard' or dif == 'very_hard'):
+                dif = input("Enter the new difficulty rating of this recipe: ")
+            newRecipe(currentUser, recipeName, description, cook_time, steps, dif)
         # EDITS A GIVEN RECIPE VIA SEVERAL PROMPTS
         elif command[0] == "editRecipe":
             recipeID = int(input("Enter the ID of the recipe you would like to edit: "))

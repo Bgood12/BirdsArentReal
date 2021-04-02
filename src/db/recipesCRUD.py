@@ -2,15 +2,18 @@ from src.db.db_utils import *
 
 def createRecipe(name, description, cook_time, steps, difficulty):
     create_sql = "INSERT INTO recipes (recipe_name, description, cook_time, steps, difficulty)" \
-                 "VALUES (%s, %s, %d, %s, %s)"
-    return exec_commit(create_sql, [name, description, cook_time, steps, difficulty])
+                 "VALUES (%s, %s, %s, %s, %s)"
+    exec_commit(create_sql, [name, description, cook_time, steps, difficulty])
+    recipes = getRecipesByName(name)
+    return recipes[-1]
+    # return exec_commit(create_sql, [name, description, cook_time, steps, difficulty])
                  
 def getRecipeByID(id):
     get_sql = "SELECT * FROM recipes WHERE recipe_id = %d"
     return exec_get_one(get_sql, [id])
 
 def getRecipesByName(name):
-    get_sql = "SELECT * FROM recipes WHERE name = %s"
+    get_sql = "SELECT * FROM recipes WHERE recipe_name = %s"
     return exec_get_all(get_sql, [name])
 
 def getRecipesByDifficulty(difficulty):
@@ -22,7 +25,7 @@ def deleteRecipe(id):
     exec_commit(delete_sql, [id])
 
 def updateRecipeName(id, name):
-    update_sql = "UPDATE recipes SET name = %s WHERE recipe_id = %d"
+    update_sql = "UPDATE recipes SET recipe_name = %s WHERE recipe_id = %d"
     exec_commit(update_sql, [name, id])
 
 def updateRecipeRating(id, rating):
