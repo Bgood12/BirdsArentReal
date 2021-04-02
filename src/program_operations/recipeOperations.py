@@ -66,3 +66,11 @@ def changeRecipeDifficulty(currentUser: CurrentUser, id, difficulty):
         print("The recipe's difficulty has been updated")
     else:
         print("Current user did not create this recipe")
+
+def printMyRecipes(currentUser: CurrentUser):
+    myRecipes = getAuthorshipsByName(currentUser.getUser())
+    print("My Recipe List:")
+    for recipe in myRecipes:
+        recipeName = getRecipeByID(recipe[1])[1]
+        authorshipToString = recipe[1] + ": " + recipeName
+        print(authorshipToString)

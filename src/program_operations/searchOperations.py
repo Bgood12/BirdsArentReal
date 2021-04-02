@@ -43,7 +43,7 @@ def searchRecipe(key):
         extractFirst(getRecipesByID)
         
         for name in ingredToRecipe:
-            recipeName = extract(getRecipesById(name)
+            recipeName = extract(getRecipesById(name))
             recipes.append(recipeName)
         
         for recipe in recipes:
