@@ -1,6 +1,6 @@
 from src.db.categoriesCRUD import *
 from src.db.recipesCRUD import *
-from src.db.incorportationCRUD import *
+from src.db.incorporationCRUD import *
 from src.db.ingredientsCRUD import *
 from src.program_operations.categoriesOperations import *
 
@@ -43,7 +43,7 @@ def searchRecipe(key):
         extract(getRecipesById)
         
         for name in ingredToRecipe:
-            recipeName = extract(getRecipesById(name)
+            recipeName = extract(getRecipesById(name))
             recipes.append(recipeName)
         
         for recipe in recipes:

@@ -3,6 +3,7 @@ from src.program_operations.recipeOperations import *
 from src.program_operations_EL.Phase35 import *
 from src.program_operations.searchOperations import *
 from src.program_operations.categoriesOperations import *
+from src.program_operations_EL.memes import *
 
 currentUser = None  # global variable for storing the current user
 
@@ -153,4 +154,8 @@ def parseInput(inputStr):
             purchstr = "Enter the purchase date in this format: yyyy-mm-dd hh:mm-ss"
             purchDate = datetime.datetime.fromisoformat(input(purchstr))
             deleteFromPantry(purchDate, currentUser.getUser(), ingrID)
+
+        # MEME OPERATIONS
+        elif command[0] == "rr" or command[0] == "rickroll":
+            rickRoll()
 
