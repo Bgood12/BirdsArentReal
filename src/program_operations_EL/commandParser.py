@@ -131,7 +131,7 @@ def parseInput(inputStr):
             deleteOldRecipe(recipeId, categoryName)
 
         # RECIPE SEARCH
-        elif command[0] == "search":
+        elif command[0] == "search" or command[0] == "s":
             key = input("Please choose a search format [categories, name, ingredients]: ")
             while not (key == "categories" or key == "name" or key == "ingredients"):
                 key = input("Incorrect format please try again [categories, name, ingredients]: ")
@@ -171,7 +171,7 @@ def parseInput(inputStr):
         # REMOVES AN INGREDIENT FROM THE USER'S PANTRY
         elif command[0] == "deletePantryEntry" or command[0] == "dpe":
             ingrID = int(input("Enter the ID of the ingredient you wish to delete: "))
-            purchstr = "Enter the purchase date in this format: yyyy-mm-dd hh:mm-ss"
+            purchstr = "Enter the purchase date in this format: " + str(datetime.datetime.now())
             purchDate = datetime.datetime.fromisoformat(input(purchstr))
             deleteFromPantry(purchDate, currentUser.getUser(), ingrID)
 
