@@ -55,7 +55,12 @@ def parseInput(inputStr):
             categoryName = input("Enter name of category you want to change: ")
             categoryNewName = input("Enter new name of the category: ")
             changeCategoryName(categoryName, categoryNewName)
-            
+    
+        # LIST CATEGORIES
+        elif command[0] == "listCategories":
+            print("List of categories:\n")
+            listAllcategories()
+                           
         # DELETE CATEGORY
         elif command[0] == "deleteCategory":
             categoryName = input("Enter the name of the category to delete: ")
