@@ -1,5 +1,7 @@
 from src.program_operations.accountOperations import *
 from src.program_operations.recipeOperations import *
+from src.program_operations.searchOperations import *
+from src.program_operations.categoriesOperations import *
 
 currentUser = None  # global variable for storing the current user
 
@@ -42,6 +44,41 @@ def parseInput(inputStr):
             # TODO add prompt for which part of the recipe is being edited, then a prompt for the new value
         # TODO recipe operations: getMyRecipes (to view ids of recipes by the user), deleteRecipe [id]
         # TODO createCategoryForRecipe [recipeID] [new-category], assignToCategory [recipeID] [category]
-        # TODO recipe search operations
+        # CREATE CATEGORY
+        elif command[0] == "createCategory":
+            categoryName = input("Enter the name of the category: ")
+            recipeId = int(input("Enter a recipe ID to add: ")
+            createNewCategory(currentUser, recipeId, categoryName)
+                           
+        # EDIT CATEGORY NAME                   
+        elif command[0] == "editCategory":
+            categoryName = input("Enter name of category you want to change: ")
+            categoryNewName = input("Enter new name of the category: ")
+            changeCategoryName(categoryName, categoryNewName)
+            
+        # DELETE CATEGORY
+        elif command[0] == "deleteCategory":
+            categoryName = input("Enter the name of the category to delete: ")
+            deleteCategory(categoryName)
+        
+        # ADD RECIPE IN CATEGORY
+        elif command[0] == "addRecipeInCategory":
+            categoryName = input("Enter name of category to add to: ")
+            recipeId = int(input("Enter the id of the recipe to add: ")
+            addNewRecipe(recipeId, categoryName)
+        
+       # DELETE RECIPE IN CATEGORY
+       elif command[0] == "deleteRecipeInCategory":
+            categoryName = input("Enter name of category to delete from: ")
+            recipeId = int(input("Enter the id of the recipe to delete: ")
+            deleteOldRecipe(recipeId, categoryName)
+                 
+        # RECIPE SEARCH
+        elif command[0] == "search":
+            key = input("Please choose a search format [categories, name, ingredients]: ")
+            while key != "categories" or key != "name" or key != "ingredients":
+                key = input("Incorrect format please try again [categories, name, ingredients]: ")
+            searchRecipe(key)
+        
         # TODO cooking the recipe related operations
         # TODO user pantry operations
