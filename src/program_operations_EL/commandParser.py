@@ -4,6 +4,7 @@ from src.program_operations_EL.Phase35 import *
 from src.program_operations.searchOperations import *
 from src.program_operations.categoriesOperations import *
 from src.program_operations_EL.memes import *
+from src.db.incorporationCRUD import *
 
 currentUser = None  # global variable for storing the current user
 
@@ -71,11 +72,19 @@ def parseInput(inputStr):
                 while not (dif == 'very_easy' or dif == 'easy' or dif == 'medium' or dif == 'hard' or dif == 'very_hard'):
                     dif = input("Enter the new difficulty rating of this recipe: ")
                 changeRecipeDifficulty(currentUser, recipeID, dif)
+        # TODO make no brokey no mo'
         elif command[0] == "deleteRecipe":
             recipeID = int(input("Enter the recipe you wish to delete: "))
             deleteMyRecipe(currentUser, recipeID)
         elif command[0] == "getMyRecipes":
             printMyRecipes(currentUser)
+        elif command[0] == "addIngredientToRecipe" or command[0] == "aitr":
+            recipeID = int(input("Enter the recipe you want to change: "))
+            ingredID = int(input("Enter the ingredient you want to add: "))
+            quantity = float(input("Enter the quantity the recipe requires: "))
+            createIncorporation(recipeID, ingredID, quantity)
+            print("Ingredient "+ str(ingredID) + " has been added to Recipe " + str(recipeID))
+        # TODO add removeRecipeIngredient, editRecipeIngredient
 
         # CATEGORY OPERATIONS
         # CREATE CATEGORY
@@ -115,7 +124,7 @@ def parseInput(inputStr):
         # RECIPE SEARCH
         elif command[0] == "search":
             key = input("Please choose a search format [categories, name, ingredients]: ")
-            while key != "categories" or key != "name" or key != "ingredients":
+            while not (key == "categories" or key == "name" or key == "ingredients"):
                 key = input("Incorrect format please try again [categories, name, ingredients]: ")
             searchRecipe(key)
 

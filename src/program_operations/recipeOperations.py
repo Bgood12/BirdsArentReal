@@ -72,5 +72,5 @@ def printMyRecipes(currentUser: CurrentUser):
     print("My Recipe List:")
     for recipe in myRecipes:
         recipeName = getRecipeByID(recipe[1])[1]
-        authorshipToString = recipe[1] + ": " + recipeName
+        authorshipToString = "" + str(recipe[1]) + ": " + recipeName
         print(authorshipToString)

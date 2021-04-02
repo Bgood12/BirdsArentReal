@@ -9,7 +9,7 @@ def createRecipe(name, description, cook_time, steps, difficulty):
     # return exec_commit(create_sql, [name, description, cook_time, steps, difficulty])
                  
 def getRecipeByID(id):
-    get_sql = "SELECT * FROM recipes WHERE recipe_id = %d"
+    get_sql = "SELECT * FROM recipes WHERE recipe_id = %s"
     return exec_get_one(get_sql, [id])
 
 def getRecipesByName(name):
@@ -21,29 +21,29 @@ def getRecipesByDifficulty(difficulty):
     return exec_get_all(get_sql, [difficulty])
 
 def deleteRecipe(id):
-    delete_sql = "DELETE FROM recipes WHERE recipe_id = %d"
+    delete_sql = "DELETE FROM recipes WHERE recipe_id = %s"
     exec_commit(delete_sql, [id])
 
 def updateRecipeName(id, name):
-    update_sql = "UPDATE recipes SET recipe_name = %s WHERE recipe_id = %d"
+    update_sql = "UPDATE recipes SET recipe_name = %s WHERE recipe_id = %s"
     exec_commit(update_sql, [name, id])
 
 def updateRecipeRating(id, rating):
-    update_sql = "UPDATE recipes SET rating = %s WHERE recipe_id = %d"
+    update_sql = "UPDATE recipes SET rating = %s WHERE recipe_id = %s"
     exec_commit(update_sql, [rating, id])
 
 def updateRecipeDescription(id, description):
-    update_sql = "UPDATE recipes SET description = %s WHERE recipe_id = %d"
+    update_sql = "UPDATE recipes SET description = %s WHERE recipe_id = %s"
     exec_commit(update_sql, [description, id])
 
 def updateRecipeCookTime(id, cook_time):
-    update_sql = "UPDATE recipes SET cook_time = %d WHERE recipe_id = %d"
+    update_sql = "UPDATE recipes SET cook_time = %s WHERE recipe_id = %s"
     exec_commit(update_sql, [cook_time, id])
 
 def updateRecipeSteps(id, steps):
-    update_sql = "UPDATE recipes SET steps = %s WHERE recipe_id = %d"
+    update_sql = "UPDATE recipes SET steps = %s WHERE recipe_id = %s"
     exec_commit(update_sql, [steps, id])
 
 def updateRecipeDifficulty(id, difficulty):
-    update_sql = "UPDATE recipes SET difficulty = %s WHERE recipe_id = %d"
+    update_sql = "UPDATE recipes SET difficulty = %s WHERE recipe_id = %s"
     exec_commit(update_sql, [difficulty, id])
