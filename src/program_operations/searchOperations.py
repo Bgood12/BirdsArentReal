@@ -7,7 +7,7 @@ from src.program_operations.categoriesOperations import *
 def searchRecipe(key):
     if key == "categories":
         search = input("Enter name of category: ")
-        if uniqueCategory(search) == True:
+        if uniqueCategory(search, CurrentUser.getUser) == True:
             print("This category does not exist.\n")
             return
         else:
