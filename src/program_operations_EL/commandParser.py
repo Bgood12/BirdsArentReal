@@ -13,8 +13,8 @@ def helpcmd(loggedin):
     if loggedin:
         print("Available commands:\nquit - quits the application\nhelp - display available commands\nlogout - logs the current user out")
     else:
-        helpmessage = "Available commands:\nquit - quits the application\nhelp - display available commands\nlogin [username] [password] - logs the " \
-                      "users into their accounts\nregister [username] [password] - registers a new user account\n"
+        helpmessage = "Available commands:\nquit - quits the application\nhelp - display available commands\nlogin - logs the " \
+                      "users into their accounts\nregister - registers a new user account\n"
         print(helpmessage)
 
 
