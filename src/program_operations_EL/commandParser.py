@@ -24,10 +24,14 @@ def parseInput(inputStr):
         helpcmd(currentUser is not None)
     # ACCOUNT OPERATIONS
     if currentUser is None or not currentUser.isLoggedIn():
-        if command[0] == "login" and len(command) == 3:
-            currentUser = login(command[1], command[2])
-        elif command[0] == "register" and len(command) == 3:
-            createAccount(command[1], command[2])
+        if command[0] == "login":
+            username = input("Username: ")
+            password = input("Password: ")
+            currentUser = login(username, password)
+        elif command[0] == "register":
+            username = input("Username: ")
+            password = input("Password: ")
+            createAccount(username, password)
     else:
         if command[0] == "logout":
             currentUser.logout()
@@ -41,6 +45,7 @@ def parseInput(inputStr):
             steps = input("What steps does it take to prepare? ")
             difficulty = input("How hard is it to prepare [very_easy to very_hard]? ")
             newRecipe(currentUser, recipeName, description, cook_time, steps, difficulty)
+        # EDITS A GIVEN RECIPE VIA SEVERAL PROMPTS
         elif command[0] == "editRecipe":
             recipeID = int(input("Enter the ID of the recipe you would like to edit: "))
             field = 'taco'
