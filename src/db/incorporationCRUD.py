@@ -1,7 +1,7 @@
 from src.db.db_utils import *
 
 def createIncorporation(recipe_id, ingredient_id, quantity):
-    create_sql = "INSERT INTO incorporation (recipe_id, ingredient_id, quantity) VALUES (%d, %d, %d)"
+    create_sql = "INSERT INTO incorporation (recipe_id, ingredient_id, quantity) VALUES (%s, %s, %s)"
     exec_commit(create_sql, [recipe_id, ingredient_id, quantity])
 
 def getIncorporationsByRecipeID(recipe_id):

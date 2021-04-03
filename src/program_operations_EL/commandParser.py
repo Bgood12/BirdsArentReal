@@ -4,6 +4,7 @@ from src.program_operations_EL.Phase35 import *
 from src.program_operations.searchOperations import *
 from src.program_operations.categoriesOperations import *
 from src.program_operations_EL.memes import *
+from src.db.incorporationCRUD import *
 
 currentUser = None  # global variable for storing the current user
 
@@ -13,8 +14,8 @@ def helpcmd(loggedin):
     if loggedin:
         print("Available commands:\nquit - quits the application\nhelp - display available commands\nlogout - logs the current user out")
     else:
-        helpmessage = "Available commands:\nquit - quits the application\nhelp - display available commands\nlogin [username] [password] - logs the " \
-                      "users into their accounts\nregister [username] [password] - registers a new user account\n"
+        helpmessage = "Available commands:\nquit - quits the application\nhelp - display available commands\nlogin - logs the " \
+                      "users into their accounts\nregister - registers a new user account\n"
         print(helpmessage)
 
 
@@ -35,7 +36,7 @@ def parseInput(inputStr):
             createAccount(username, password)
     else:
         if command[0] == "logout":
-            currentUser.logout()
+            logout(currentUser)
 
         # RECIPE OPERATIONS
         # CREATE A RECIPE
@@ -44,8 +45,10 @@ def parseInput(inputStr):
             description = input("Enter a description: ")
             cook_time = float(input("Prep time in minutes: "))
             steps = input("What steps does it take to prepare? ")
-            difficulty = input("How hard is it to prepare [very_easy to very_hard]? ")
-            newRecipe(currentUser, recipeName, description, cook_time, steps, difficulty)
+            dif = 'very_medium'  # the most premium difficulty
+            while not (dif == 'very_easy' or dif == 'easy' or dif == 'medium' or dif == 'hard' or dif == 'very_hard'):
+                dif = input("Enter the new difficulty rating of this recipe: ")
+            newRecipe(currentUser, recipeName, description, cook_time, steps, dif)
         # EDITS A GIVEN RECIPE VIA SEVERAL PROMPTS
         elif command[0] == "editRecipe":
             recipeID = int(input("Enter the ID of the recipe you would like to edit: "))
@@ -69,11 +72,19 @@ def parseInput(inputStr):
                 while not (dif == 'very_easy' or dif == 'easy' or dif == 'medium' or dif == 'hard' or dif == 'very_hard'):
                     dif = input("Enter the new difficulty rating of this recipe: ")
                 changeRecipeDifficulty(currentUser, recipeID, dif)
+        # TODO make no brokey no mo'
         elif command[0] == "deleteRecipe":
             recipeID = int(input("Enter the recipe you wish to delete: "))
             deleteMyRecipe(currentUser, recipeID)
         elif command[0] == "getMyRecipes":
             printMyRecipes(currentUser)
+        elif command[0] == "addIngredientToRecipe" or command[0] == "aitr":
+            recipeID = int(input("Enter the recipe you want to change: "))
+            ingredID = int(input("Enter the ingredient you want to add: "))
+            quantity = float(input("Enter the quantity the recipe requires: "))
+            createIncorporation(recipeID, ingredID, quantity)
+            print("Ingredient "+ str(ingredID) + " has been added to Recipe " + str(recipeID))
+        # TODO add removeRecipeIngredient, editRecipeIngredient
 
         # CATEGORY OPERATIONS
         # CREATE CATEGORY
@@ -107,7 +118,7 @@ def parseInput(inputStr):
         # RECIPE SEARCH
         elif command[0] == "search":
             key = input("Please choose a search format [categories, name, ingredients]: ")
-            while key != "categories" or key != "name" or key != "ingredients":
+            while not (key == "categories" or key == "name" or key == "ingredients"):
                 key = input("Incorrect format please try again [categories, name, ingredients]: ")
             searchRecipe(key)
 
