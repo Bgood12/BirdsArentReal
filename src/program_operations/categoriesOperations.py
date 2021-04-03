@@ -10,6 +10,7 @@ def createNewCategory(currentUser: CurrentUser, name):
         print("No user logged in to create a category")
 
 def deleteCategory(username, category_name):
+    deleteAllBelongsByCategory(category_name)
     deleteUserCategory(username, category_name)
 
 def listAllCategories(username):

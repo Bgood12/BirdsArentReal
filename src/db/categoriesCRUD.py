@@ -30,7 +30,7 @@ def deleteUserCategory(username, category_name):
     :param username: The name of the author user
     :return:
     """
-    exec_commit('DELETE FROM categories WHERE username = %s category_name = %s', [username, category_name])
+    exec_commit('DELETE FROM categories WHERE username = %s AND category_name = %s', [username, category_name])
 
 def listCategoriesByUser(username):
     """

@@ -11,3 +11,7 @@ def deleteRecipeFromCategory(recipe_id, category_name, username):
 def listRecipesByCategory(category_name, username):
     get_sql = "SELECT * FROM belongs WHERE category_name = %s and username = %s"
     exec_get_all(get_sql, [category_name, username])
+
+def deleteAllBelongsByCategory(category_name):
+    del_sql = "DELETE FROM belongs WHERE category_name = %s"
+    exec_commit(del_sql, [category_name])
