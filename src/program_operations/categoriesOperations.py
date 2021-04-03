@@ -2,7 +2,7 @@ from src.db.categoriesCRUD import *
 from src.db.belongsCRUD import *
 from src.program_operations.accountOperations import *
 
-def createNewCategory(currentUser: CurrentUser, recipe_id, name):
+def createNewCategory(currentUser: CurrentUser, name):
     if currentUser.isLoggedIn():
         createCategory(currentUser.getUser(), name)
         print("Category has been created")

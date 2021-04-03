@@ -102,8 +102,7 @@ def parseInput(inputStr):
         # CREATE CATEGORY
         elif command[0] == "createCategory" or command[0] == "cc":
             categoryName = input("Enter the name of the category: ")
-            recipeId = int(input("Enter a recipe ID to add: "))
-            createNewCategory(currentUser, recipeId, categoryName)
+            createNewCategory(currentUser, categoryName)
 
         # LIST CATEGORIES
         elif command[0] == "listCategories":
