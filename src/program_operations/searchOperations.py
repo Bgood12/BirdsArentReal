@@ -4,7 +4,7 @@ from src.db.incorporationCRUD import *
 from src.db.ingredientsCRUD import *
 from src.program_operations.categoriesOperations import *
 
-def searchRecipe(key):
+def searchRecipe(key, surtType):
     if key == "categories":
         search = input("Enter name of category: ")
         if uniqueCategory(search, CurrentUser.getUser) == True:
@@ -12,6 +12,12 @@ def searchRecipe(key):
             return
         else:
             recipes = listAllInCategory(search, CurrentUser.getUser())
+            if (surtType == "rating"):
+                recipes.sort(key=lambda x: x[2])
+            elif surtType == "date":
+                recipes.sort(key=lambda x: x[2])  # TODO fix
+            else:
+                recipes.sort(key=lambda x: x[1])
             for recipe in recipes:
                 print(recipe)
             check = False
@@ -33,6 +39,12 @@ def searchRecipe(key):
     elif key == "name":
         search = input("Enter name of recipe: ")
         result = getRecipesByName(search)
+        if(surtType == "rating"):
+            result.sort(key=lambda x:x[2])
+        elif surtType == "date":
+            result.sort(key=lambda x:x[2]) # TODO fix
+        else:
+            result.sort(key=lambda x:x[1])
         print(result)
 
     elif key == "ingredients":
@@ -42,9 +54,14 @@ def searchRecipe(key):
         recipes = ()
         
         for name in ingredToRecipe:
-            recipeName = extractFirst(getRecipesById(name))
+            recipeName = extractFirst(getRecipesByName(name))
             recipes.append(recipeName)
-        
+        if (surtType == "rating"):
+            recipes.sort(key=lambda x: x[2])
+        elif surtType == "date":
+            recipes.sort(key=lambda x: x[2])  # TODO fix
+        else:
+            recipes.sort(key=lambda x: x[1])
         for recipe in recipes:
             print(recipe)
 

@@ -134,7 +134,10 @@ def parseInput(inputStr):
             key = input("Please choose a search format [categories, name, ingredients]: ")
             while not (key == "categories" or key == "name" or key == "ingredients"):
                 key = input("Incorrect format please try again [categories, name, ingredients]: ")
-            searchRecipe(key)
+            surt = input("Please choose a sort format [date, rating, alphabetical]: ")
+            if not (surt == "date" or surt == "rating"):
+                surt = "alf"
+            searchRecipe(key, surt)
 
         # COOKING RELATED OPERATIONS
         # COOK A RECIPE
