@@ -1,5 +1,7 @@
 from src.db.recipesCRUD import *
 from src.db.authorshipCRUD import *
+from src.db.cooksCRUD import *
+from src.db.categoriesCRUD import *
 from src.program_operations.accountOperations import *
 
 
@@ -13,7 +15,13 @@ def newRecipe(currentUser: CurrentUser, name, description, cooktime, steps, diff
 
 
 def deleteMyRecipe(currentUser: CurrentUser, recipeID):
-    if getAuthorshipByID(id)[0] == currentUser.getUser() and currentUser.isLoggedIn():
+    if getAuthorshipByID(recipeID)[0] == currentUser.getUser() and currentUser.isLoggedIn():
+        cooks = getChefsByRecipeCooked(recipeID)
+        if len(cooks) != 0:
+            print("This recipe cannot be deleted since a user has already cooked it")
+            return
+        deleteAuthorship(recipeID)
+        deleteLinesInvolvingRecipeCategory(recipeID)
         deleteRecipe(recipeID)
         print("Recipe has been deleted")
     else:

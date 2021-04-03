@@ -10,13 +10,13 @@ def createAuthorship(username, recipe_id):
 def getAuthorshipByID(recipe_id):
     get_sql = "SELECT * FROM authorship WHERE recipe_id = %s"
     # TODO fix, mucho brokey (deleteRecipe)
-    return exec_get_all(get_sql, [recipe_id])[0]
-    # return exec_get_one(get_sql, [recipe_id])
+    # return exec_get_all(get_sql, [recipe_id])[0]
+    return exec_get_one(get_sql, [recipe_id])
 
 def getAuthorshipsByName(username):
     get_sql = "SELECT * FROM authorship WHERE username = %s"
     return exec_get_all(get_sql, [username])
 
 def deleteAuthorship(recipe_id):
-    delete_sql = "DELETE FROM categories WHERE recipe_id = %s"
+    delete_sql = "DELETE FROM authorship WHERE recipe_id = %s"
     exec_commit(delete_sql, [recipe_id])
