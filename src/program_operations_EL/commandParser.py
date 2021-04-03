@@ -78,14 +78,23 @@ def parseInput(inputStr):
             deleteMyRecipe(currentUser, recipeID)
         elif command[0] == "getMyRecipes":
             printMyRecipes(currentUser)
-        elif command[0] == "addIngredientToRecipe" or command[0] == "aitr":
+        elif command[0] == "addRecipeIngredient" or command[0] == "ari":
             recipeID = int(input("Enter the recipe you want to change: "))
             ingredID = int(input("Enter the ingredient you want to add: "))
             quantity = float(input("Enter the quantity the recipe requires: "))
             createIncorporation(recipeID, ingredID, quantity)
             print("Ingredient "+ str(ingredID) + " has been added to Recipe " + str(recipeID))
-        # TODO add removeRecipeIngredient, editRecipeIngredient
-
+        elif command[0] == "removeRecipeIngredient" or command[0] == "rri":
+            recipeID = int(input("Enter the recipe you want to change: "))
+            ingredID = int(input("Enter the ingredient you want to remove: "))
+            deleteIncorporation(recipeID, ingredID)
+            print("Ingredient " + str(ingredID) + " has been removed from Recipe " + str(recipeID))
+        elif command[0] == "editRecipeIngredientQuantity" or command[0] == "eriq":
+            recipeID = int(input("Enter the recipe you want to change: "))
+            ingredID = int(input("Enter the ingredient you want to affect: "))
+            quantity = float(input("Enter the updated quantity the recipe requires: "))
+            updateIncorporation(recipeID, ingredID, quantity)
+            print("Recipe "+str(recipeID)+" now requires "+str(quantity)+" stones of "+str(ingredID))
         # CATEGORY OPERATIONS
         # CREATE CATEGORY
         elif command[0] == "createCategory":
@@ -116,7 +125,7 @@ def parseInput(inputStr):
             deleteFromCategory(recipeId, categoryName, CurrentUser.getUser())
 
         # RECIPE SEARCH
-        elif command[0] == "search":
+        elif command[0] == "search" or command[0] == "s":
             key = input("Please choose a search format [categories, name, ingredients]: ")
             while not (key == "categories" or key == "name" or key == "ingredients"):
                 key = input("Incorrect format please try again [categories, name, ingredients]: ")
@@ -124,7 +133,7 @@ def parseInput(inputStr):
 
         # COOKING RELATED OPERATIONS
         # COOK A RECIPE
-        elif command[0] == "cookRecipe":
+        elif command[0] == "cookRecipe" or command[0] == "cr":
             recipeID = int(input("Enter the ID of the recipe you wish to make: "))
             scalar = float(input("Enter the number by which you multiplied the recipe's ingredients: "))
             rating = int(input("Enter what you would rate this recipe on a scale of 0 to 5 "))
@@ -134,29 +143,29 @@ def parseInput(inputStr):
                 rating = 5
             makeRecipe(recipeID, currentUser.getUser(), scalar, rating)
         # TELLS THE USER IF THEY CAN MAKE A RECIPE
-        elif command[0] == "canIMake":
+        elif command[0] == "canIMake" or command[0] == "cim":
             recipeID = int(input("Enter the ID of the recipe you wish to make: "))
             scalar = float(input("How many times would you like to make this recipe: "))
-            if recipeCanBeMade(recipeID, scalar):
+            if recipeCanBeMade(recipeID, currentUser.getUser(), scalar):
                 print("You have everything you need to make that volume of this recipe")
             else:
                 print("You lack the required ingredients to make that volume of this recipe")
 
         # PANTRY OPERATIONS
         # PRINTS THE USER'S PANTRY
-        elif command[0] == "getMyPantry":
+        elif command[0] == "getMyPantry" or command[0] == "gmp":
             printMyPantryStr(currentUser.getUser())
         # ADDS AN INGREDIENT TO THE USER'S PANTRY
-        elif command[0] == "addIngredientToPantry":
+        elif command[0] == "addIngredientToPantry" or command[0] == "aitp":
             purchaseDate = datetime.datetime.now()
             ingrID = int(input("Enter the Ingredient ID: "))
-            quantity = float(input("Enter the quantity purchased"))
-            expirationDate = addDays(purchaseDate, int(input("Enter the number of days before it expires")))
+            quantity = float(input("Enter the quantity purchased: "))
+            expirationDate = addDays(purchaseDate, int(input("Enter the number of days before it expires: ")))
             insertToPantry(purchaseDate, currentUser.getUser(), ingrID, quantity, expirationDate)
         # REMOVES AN INGREDIENT FROM THE USER'S PANTRY
-        elif command[0] == "deletePantryEntry":
+        elif command[0] == "deletePantryEntry" or command[0] == "dpe":
             ingrID = int(input("Enter the ID of the ingredient you wish to delete: "))
-            purchstr = "Enter the purchase date in this format: yyyy-mm-dd hh:mm-ss"
+            purchstr = "Enter the purchase date in this format: " + str(datetime.datetime.now())
             purchDate = datetime.datetime.fromisoformat(input(purchstr))
             deleteFromPantry(purchDate, currentUser.getUser(), ingrID)
 

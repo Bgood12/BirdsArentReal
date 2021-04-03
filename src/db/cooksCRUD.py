@@ -13,7 +13,7 @@ def cookRecipe(username, recipe_id, rating, servings):
     """
     creation_date = datetime.datetime.now() # The date the recipe was cooked
     create_sql = "INSERT INTO cooks (creation_date, username, recipe_id, rating, servings)"\
-                 "VALUES (%s, %s, %d, %d, %d)"
+                 "VALUES (%s, %s, %s, %s, %s)"
     exec_commit(create_sql, [creation_date, username, recipe_id, rating, servings])
     
 def updateRating(username, recipe_id, new_rating):
@@ -24,10 +24,10 @@ def updateRating(username, recipe_id, new_rating):
     :param new_rating: The new rating
     :return:
     """
-    update_sql = "UPDATE recipe_id SET rating = %d WHERE rating = %d"
+    update_sql = "UPDATE cooks SET rating = %s WHERE username = %s AND recipe_id = %s"
     user_cook = exec_get_one('SELECT * FROM cooks WHERE username = %s', [username])
     recipe = exec_get_one('SELECT * FROM user_cook WHERE recipe_id = %d', [recipe_id])
-    exec_commit(update_sql, [new_rating, recipe])
+    exec_commit(update_sql, [new_rating, username, recipe_id])
 
 def updateServings(username, recipe_id, new_servings):
     """
