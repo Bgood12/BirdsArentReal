@@ -87,6 +87,8 @@ def isUniqueUsername(username) -> bool:
     :return: True if username is unique false otherwise
     """
     users = listUsers() # Get a list of all the users
+    if users == None:
+        return True
     for user in users[0]: # For each tuple in users
         if user[0] == username:
             return False # The username found a match so it is not unique

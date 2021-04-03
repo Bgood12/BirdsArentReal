@@ -34,8 +34,8 @@ def login(username, password):
     user = exec_get_one("SELECT username FROM users WHERE username = %s AND password = %s", [username, hash])
     if user[0] == username:
         updateLastAccess(username, datetime.datetime.now())
-        print("User: " + username + "is logged in")
-        return CurrentUser.__init__(username=username)
+        print("User: " + username + " is logged in")
+        return CurrentUser(username)
     else:
         print("Invalid username or password")
 

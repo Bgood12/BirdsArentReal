@@ -9,3 +9,13 @@ for line in sys.stdin:
     else:
         parseInput(line)
 print("Program exited")
+"""
+print("type 'help' to view commands")
+running = True
+while running:
+    line = input(">> ")
+    if 'quit' == line.rstrip():
+        running = False
+    else:
+        parseInput(line)
+"""
