@@ -1,4 +1,5 @@
 from src.db.categoriesCRUD import *
+from src.db.belongsCRUD import *
 from src.program_operations.accountOperations import *
 
 def createNewCategory(currentUser: CurrentUser, recipe_id, name):
@@ -9,7 +10,7 @@ def createNewCategory(currentUser: CurrentUser, recipe_id, name):
         print("No user logged in to create a category")
 
 def deleteCategory(username, category_name):
-    deleteCategoryByName(username, category_name)
+    deleteUserCategory(username, category_name)
 
 def listAllCategories(username):
     cat = listCategoriesByUser(username)
