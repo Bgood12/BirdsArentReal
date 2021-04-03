@@ -116,12 +116,14 @@ def parseInput(inputStr):
             categoryName = input("Enter name of category to add to: ")
             recipeId = int(input("Enter the id of the recipe to add: "))
             addToCategory(recipeId, categoryName, currentUser.getUser())
+            print("Category " + categoryName + " assigned to " + str(recipeId))
 
         # DELETE RECIPE IN CATEGORY
         elif command[0] == "deleteRecipeInCategory":
             categoryName = input("Enter name of category to delete from: ")
             recipeId = int(input("Enter the id of the recipe to delete: "))
             deleteFromCategory(recipeId, categoryName, currentUser.getUser())
+            print("Category " + categoryName + " removed from " + str(recipeId))
 
         # RECIPE SEARCH
         elif command[0] == "search" or command[0] == "s":
