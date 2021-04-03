@@ -112,7 +112,7 @@ def parseInput(inputStr):
         # DELETE CATEGORY
         elif command[0] == "deleteCategory":
             categoryName = input("Enter the name of the category to delete: ")
-            deleteCategory(categoryName, currentUser.getUser())
+            deleteCategory(currentUser.getUser(), categoryName)
             print("Category deleted")
 
         # ADD RECIPE IN CATEGORY
