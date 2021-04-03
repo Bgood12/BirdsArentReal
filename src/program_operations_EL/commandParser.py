@@ -12,7 +12,11 @@ currentUser = None  # global variable for storing the current user
 def helpcmd(loggedin):
     # displays list of currently available commands
     if loggedin:
-        print("Available commands:\nquit - quits the application\nhelp - display available commands\nlogout - logs the current user out")
+        print("Available commands:\nquit - quits the application\nhelp - display available commands\nlogout - logs "
+              "the current user out\ncreateRecipe - lets the user create a recipe\neditRecipe\ndeleteRecipe\ngetMyRecipes\n"
+              "addRecipeIngredient\nremoveRecipeIngredient\neditRecipeIngredientQuantity\ncreateCategory\nlistCategories"
+              "deleteCategory\naddRecipeInCategory\ndeleteRecipeInCategory\nsearch\ncookRecipe\ncanIMake\ngetMyPantry"
+              "addIngredientToPantry\ndeletePantryEntry\nrr")
     else:
         helpmessage = "Available commands:\nquit - quits the application\nhelp - display available commands\nlogin - logs the " \
                       "users into their accounts\nregister - registers a new user account\n"
@@ -96,7 +100,7 @@ def parseInput(inputStr):
             print("Recipe "+str(recipeID)+" now requires "+str(quantity)+" stones of "+str(ingredID))
         # CATEGORY OPERATIONS
         # CREATE CATEGORY
-        elif command[0] == "createCategory":
+        elif command[0] == "createCategory" or command[0] == "cc":
             categoryName = input("Enter the name of the category: ")
             recipeId = int(input("Enter a recipe ID to add: "))
             createNewCategory(currentUser, recipeId, categoryName)
@@ -112,14 +116,14 @@ def parseInput(inputStr):
             deleteCategory(categoryName, currentUser.getUser())
 
         # ADD RECIPE IN CATEGORY
-        elif command[0] == "addRecipeInCategory":
+        elif command[0] == "addRecipeInCategory" or command[0] == "aric":
             categoryName = input("Enter name of category to add to: ")
             recipeId = int(input("Enter the id of the recipe to add: "))
             addToCategory(recipeId, categoryName, currentUser.getUser())
             print("Category " + categoryName + " assigned to " + str(recipeId))
 
         # DELETE RECIPE IN CATEGORY
-        elif command[0] == "deleteRecipeInCategory":
+        elif command[0] == "deleteRecipeInCategory" or command[0] == "dric":
             categoryName = input("Enter name of category to delete from: ")
             recipeId = int(input("Enter the id of the recipe to delete: "))
             deleteFromCategory(recipeId, categoryName, currentUser.getUser())
