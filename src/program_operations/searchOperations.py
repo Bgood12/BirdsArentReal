@@ -12,7 +12,7 @@ def searchRecipe(key, surtType):
             return
         else:
             recipes = listAllInCategory(search, CurrentUser.getUser())
-            if (surtType == "rating"):
+            if surtType == "rating":
                 recipes.sort(key=lambda x: x[2])
             elif surtType == "date":
                 recipes.sort(key=lambda x: x[2])  # TODO fix
@@ -39,7 +39,7 @@ def searchRecipe(key, surtType):
     elif key == "name":
         search = input("Enter name of recipe: ")
         result = getRecipesByName(search)
-        if(surtType == "rating"):
+        if surtType == "rating":
             result.sort(key=lambda x:x[2])
         elif surtType == "date":
             result.sort(key=lambda x:x[2]) # TODO fix
@@ -56,7 +56,7 @@ def searchRecipe(key, surtType):
         for name in ingredToRecipe:
             recipeName = extractFirst(getRecipesByName(name))
             recipes.append(recipeName)
-        if (surtType == "rating"):
+        if surtType == "rating":
             recipes.sort(key=lambda x: x[2])
         elif surtType == "date":
             recipes.sort(key=lambda x: x[2])  # TODO fix
