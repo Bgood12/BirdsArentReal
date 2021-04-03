@@ -47,7 +47,7 @@ def uniqueCategory(category_name, username) -> bool:
     """
 
     categories = listCategoriesByUser(username) # List of all categories
-    for category in categories[0]: # For each tuple in categories
+    for category in categories: # For each tuple in categories
         if category[0] == category_name:
             return False # The name of the category is not unique
     return True # The name of the category is unique

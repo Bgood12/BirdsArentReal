@@ -104,24 +104,24 @@ def parseInput(inputStr):
         # LIST CATEGORIES
         elif command[0] == "listCategories":
             print("List of categories:\n")
-            listAllCategories(CurrentUser.getUser())
+            listAllCategories(currentUser.getUser())
 
         # DELETE CATEGORY
         elif command[0] == "deleteCategory":
             categoryName = input("Enter the name of the category to delete: ")
-            deleteCategory(categoryName, CurrentUser.getUser())
+            deleteCategory(categoryName, currentUser.getUser())
 
         # ADD RECIPE IN CATEGORY
         elif command[0] == "addRecipeInCategory":
             categoryName = input("Enter name of category to add to: ")
             recipeId = int(input("Enter the id of the recipe to add: "))
-            addToCategory(recipeId, categoryName, CurrentUser.getUser())
+            addToCategory(recipeId, categoryName, currentUser.getUser())
 
         # DELETE RECIPE IN CATEGORY
         elif command[0] == "deleteRecipeInCategory":
             categoryName = input("Enter name of category to delete from: ")
             recipeId = int(input("Enter the id of the recipe to delete: "))
-            deleteFromCategory(recipeId, categoryName, CurrentUser.getUser())
+            deleteFromCategory(recipeId, categoryName, currentUser.getUser())
 
         # RECIPE SEARCH
         elif command[0] == "search" or command[0] == "s":
