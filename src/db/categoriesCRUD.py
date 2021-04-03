@@ -52,3 +52,6 @@ def uniqueCategory(category_name, username) -> bool:
             return False # The name of the category is not unique
     return True # The name of the category is unique
 
+def deleteLinesInvolvingRecipeCategory(recipe_id): # NAME BAD< WILL NOT FIX
+    del_sql = "DELETE FROM categories WHERE recipe_id = %s"
+    exec_commit(del_sql, [recipe_id])

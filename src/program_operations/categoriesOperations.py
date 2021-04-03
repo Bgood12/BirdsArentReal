@@ -4,7 +4,7 @@ from src.program_operations.accountOperations import *
 
 def createNewCategory(currentUser: CurrentUser, recipe_id, name):
     if currentUser.isLoggedIn():
-        x = createCategory(username, name)[1]
+        x = createCategory(currentUser.getUser(), name)[1]
         print(x, "category has been created")
     else:
         print("No user logged in to create a category")

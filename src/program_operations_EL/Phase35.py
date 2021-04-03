@@ -19,7 +19,7 @@ def ampleIngredientStored(username, ingredient_id, amount_needed):
 
 def makeRecipe(recipe_id, username, scalar, rating):
     if recipeCanBeMade(recipe_id, username, scalar):
-        cookRecipe(username, recipe_id, recipe_id, scalar)
+        cookRecipe(username, recipe_id, rating, scalar)
         incorperations = getIncorporationsByRecipeID(recipe_id)
         for incorp in incorperations:
             useIngredientByClosestExpirationDate(username, incorp[1], incorp[2] * scalar)

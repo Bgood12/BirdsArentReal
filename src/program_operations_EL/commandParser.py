@@ -72,11 +72,10 @@ def parseInput(inputStr):
                 while not (dif == 'very_easy' or dif == 'easy' or dif == 'medium' or dif == 'hard' or dif == 'very_hard'):
                     dif = input("Enter the new difficulty rating of this recipe: ")
                 changeRecipeDifficulty(currentUser, recipeID, dif)
-        # TODO make no brokey no mo'
-        elif command[0] == "deleteRecipe":
+        elif command[0] == "deleteRecipe" or command[0] == "dr":
             recipeID = int(input("Enter the recipe you wish to delete: "))
             deleteMyRecipe(currentUser, recipeID)
-        elif command[0] == "getMyRecipes":
+        elif command[0] == "getMyRecipes" or command[0] == "gmr":
             printMyRecipes(currentUser)
         elif command[0] == "addRecipeIngredient" or command[0] == "ari":
             recipeID = int(input("Enter the recipe you want to change: "))
