@@ -5,6 +5,7 @@ from src.program_operations.searchOperations import *
 from src.program_operations.categoriesOperations import *
 from src.program_operations_EL.memes import *
 from src.db.incorporationCRUD import *
+from src.program_operations.ratingOperations import *
 
 currentUser = None  # global variable for storing the current user
 
@@ -174,6 +175,11 @@ def parseInput(inputStr):
             purchstr = "Enter the purchase date in this format: " + str(datetime.datetime.now())
             purchDate = datetime.datetime.fromisoformat(input(purchstr))
             deleteFromPantry(purchDate, currentUser.getUser(), ingrID)
+
+        # RATING OPERATIONS
+        # RETURNS THE 50 HIGHEST RATED RECIPES
+        elif command[0] == "topFifty" or command[0] == "top50":
+            print(topFifty())
 
         # MEME OPERATIONS
         elif command[0] == "rr" or command[0] == "rickroll":
