@@ -144,7 +144,7 @@ def printOneRecipe(recipe_id):
     rec = getRecipeByID(recipe_id)
     titleStr = str(rec[0]) + ": " + str(rec[1])
     ingreds = getIncorporationsByRecipeID(recipe_id)
-    ingredStr = "ingredients: "
+    ingredStr = "ingredients (id:###): "
     for incorp in ingreds:
         ingredStr += "("+str(incorp[1])+":"+str(incorp[2])+") "
     print(titleStr)
