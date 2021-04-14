@@ -5,6 +5,7 @@ from src.program_operations.searchOperations import *
 from src.program_operations.categoriesOperations import *
 from src.program_operations_EL.memes import *
 from src.db.incorporationCRUD import *
+from src.program_operations_EL.ELphase4 import getAllMakable
 
 currentUser = None  # global variable for storing the current user
 
@@ -44,7 +45,7 @@ def parseInput(inputStr):
 
         # RECIPE OPERATIONS
         # CREATE A RECIPE
-        elif command[0] == "createRecipe":
+        elif command[0] == "createRecipe" or command[0] == "crr":
             recipeName = input("Enter the name of your new recipe: ")
             description = input("Enter a description: ")
             cook_time = float(input("Prep time in minutes: "))
@@ -170,6 +171,7 @@ def parseInput(inputStr):
             quantity = float(input("Enter the quantity purchased: "))
             expirationDate = addDays(purchaseDate, int(input("Enter the number of days before it expires: ")))
             insertToPantry(purchaseDate, currentUser.getUser(), ingrID, quantity, expirationDate)
+            print("ingredient added successfully")
         # REMOVES AN INGREDIENT FROM THE USER'S PANTRY
         elif command[0] == "deletePantryEntry" or command[0] == "dpe":
             ingrID = int(input("Enter the ID of the ingredient you wish to delete: "))
@@ -177,9 +179,35 @@ def parseInput(inputStr):
             purchDate = datetime.datetime.fromisoformat(input(purchstr))
             deleteFromPantry(purchDate, currentUser.getUser(), ingrID)
 
+        # MISC MISSING OPERATIONS
+        # VIEW A SINGLE RECIPE
+        elif command[0] == "viewRecipe" or command[0] == "vr":
+            recipeID = int(input("Enter the ID of the recipe you wish to view: "))
+            printOneRecipe(recipeID)
+        # PHASE 4 OPERATIONS
+        # DISPLAYS RECIPES THE USER CAN MAKE 1 BATCH OF
+        elif command[0] == "getRecipiesOnHand" or command[0] == "groh":
+            getAllMakable(currentUser.getUser())
+
         # MEME OPERATIONS
         elif command[0] == "rr" or command[0] == "rickroll":
             rickRoll()
         elif command[0] == "sb" or command[0] == "stickbug":
             stickbug()
 
+
+# TODO move everything into helper methods like this
+def printOneRecipe(recipe_id):
+    rec = getRecipeByID(recipe_id)
+    titleStr = str(rec[0]) + ": " + str(rec[1])
+    ingreds = getIncorporationsByRecipeID(recipe_id)
+    ingredStr = "ingredients: "
+    for incorp in ingreds:
+        ingredStr += "("+str(incorp[1])+":"+str(incorp[2])+") "
+    print(titleStr)
+    print("rating: "+str(rec[2]))
+    print(ingredStr)
+    print("description: "+rec[3])
+    print("cook time: "+str(rec[4]))
+    print("steps: "+rec[5])
+    print("difficulty: "+rec[6])
