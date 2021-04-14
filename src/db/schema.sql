@@ -20,10 +20,21 @@ CREATE TABLE users(
 );
 
 CREATE TABLE categories(
-    recipe_id SERIAL PRIMARY KEY,
-    name VARCHAR(40) NOT NULL, 
-    FOREIGN KEY (recipe_id) REFERENCES recipes (recipe_id)
+    username VARCHAR (100),
+    category_name VARCHAR(40), 
+    PRIMARY KEY (username, category_name),
+    FOREIGN KEY (username) REFERENCES users (username)
 );
+
+CREATE TABLE belongs(
+    recipe_id SERIAL,
+    category_name VARCHAR (40),
+    username VARCHAR (100),
+    PRIMARY KEY(recipe_id, category_name, username),
+    FOREIGN KEY (recipe_id) REFERENCES recipes (recipe_id),
+    FOREIGN KEY (category_name) REFERENCES categories (category_name),
+    FOREIGN KEY (username) REFERENCES users (username)
+)
 
 CREATE TABLE cooks(
     username VARCHAR(100), 
