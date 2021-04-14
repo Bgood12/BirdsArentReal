@@ -53,6 +53,11 @@ def getPantryByUser(username):
     return exec_get_all(select_sql, [username])
 
 
+def getIngredientsByUser(username):
+    select_sql = 'SELECT ingredient_id FROM pantry WHERE username = %s'
+    return exec_get_all(select_sql, [username])
+
+
 def getAmountOfIngredient(username, ingredient_id):
     # get the amount of an ingredient in the user's pantry regardless of purchase date
     select_sql = 'SELECT current_quantity FROM pantry WHERE username = %s AND ingredient_id = %s'
