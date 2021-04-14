@@ -6,6 +6,8 @@ from src.program_operations.categoriesOperations import *
 from src.program_operations_EL.memes import *
 from src.db.incorporationCRUD import *
 from src.program_operations.ratingOperations import *
+from src.program_operations_EL.ELphase4 import getAllMakable
+from src.program_operations_EL.safeInput import *
 
 currentUser = None  # global variable for storing the current user
 
@@ -13,7 +15,11 @@ currentUser = None  # global variable for storing the current user
 def helpcmd(loggedin):
     # displays list of currently available commands
     if loggedin:
-        print("Available commands:\nquit - quits the application\nhelp - display available commands\nlogout - logs the current user out")
+        print("Available commands:\nquit - quits the application\nhelp - display available commands\nlogout - logs "
+              "the current user out\ncreateRecipe - lets the user create a recipe\neditRecipe\ndeleteRecipe\ngetMyRecipes\n"
+              "addRecipeIngredient\nremoveRecipeIngredient\neditRecipeIngredientQuantity\ncreateCategory\nlistCategories"
+              "deleteCategory\naddRecipeInCategory\ndeleteRecipeInCategory\nsearch\ncookRecipe\ncanIMake\ngetMyPantry"
+              "addIngredientToPantry\ndeletePantryEntry\nrr")
     else:
         helpmessage = "Available commands:\nquit - quits the application\nhelp - display available commands\nlogin - logs the " \
                       "users into their accounts\nregister - registers a new user account\n"
@@ -41,122 +47,70 @@ def parseInput(inputStr):
 
         # RECIPE OPERATIONS
         # CREATE A RECIPE
-        elif command[0] == "createRecipe":
-            recipeName = input("Enter the name of your new recipe: ")
-            description = input("Enter a description: ")
-            cook_time = float(input("Prep time in minutes: "))
-            steps = input("What steps does it take to prepare? ")
-            dif = 'very_medium'  # the most premium difficulty
-            while not (dif == 'very_easy' or dif == 'easy' or dif == 'medium' or dif == 'hard' or dif == 'very_hard'):
-                dif = input("Enter the new difficulty rating of this recipe: ")
-            newRecipe(currentUser, recipeName, description, cook_time, steps, dif)
+        elif command[0] == "createRecipe" or command[0] == "crr":
+            createRecipeCmd(currentUser)
         # EDITS A GIVEN RECIPE VIA SEVERAL PROMPTS
         elif command[0] == "editRecipe":
-            recipeID = int(input("Enter the ID of the recipe you would like to edit: "))
-            field = 'taco'
-            while not (field == 'name' or field == 'description' or field == 'cook_time' or field == 'steps' or field == 'difficulty' or field == 'cancel'):
-                field = input("Enter the field you wish to edit [name,description,cook_time,steps,difficulty]: ")
-            if field == 'name':
-                newName = input("Enter the new name of this recipe: ")
-                changeRecipeName(currentUser, recipeID, newName)
-            elif field == 'description':
-                newDescription = input("Enter the new description of this recipe: ")
-                changeRecipeDescription(currentUser, recipeID, newDescription)
-            elif field == 'cook_time':
-                newCookTime = int(input("Enter the revised cook time: "))
-                changeRecipeCookTime(currentUser, recipeID, newCookTime)
-            elif field == 'steps':
-                newSteps = input("Enter a revised series of steps: ")
-                changeRecipeSteps(currentUser, recipeID, newSteps)
-            elif field == 'difficulty':
-                dif = 'very_medium' # the most premium difficulty
-                while not (dif == 'very_easy' or dif == 'easy' or dif == 'medium' or dif == 'hard' or dif == 'very_hard'):
-                    dif = input("Enter the new difficulty rating of this recipe: ")
-                changeRecipeDifficulty(currentUser, recipeID, dif)
-        # TODO make no brokey no mo'
-        elif command[0] == "deleteRecipe":
-            recipeID = int(input("Enter the recipe you wish to delete: "))
+            editRecipeCmd(currentUser)
+        elif command[0] == "deleteRecipe" or command[0] == "dr":
+            recipeID = getIntPositive("Enter the recipe you wish to delete: ")
             deleteMyRecipe(currentUser, recipeID)
-        elif command[0] == "getMyRecipes":
+        elif command[0] == "getMyRecipes" or command[0] == "gmr":
             printMyRecipes(currentUser)
         elif command[0] == "addRecipeIngredient" or command[0] == "ari":
-            recipeID = int(input("Enter the recipe you want to change: "))
-            ingredID = int(input("Enter the ingredient you want to add: "))
-            quantity = float(input("Enter the quantity the recipe requires: "))
-            createIncorporation(recipeID, ingredID, quantity)
-            print("Ingredient "+ str(ingredID) + " has been added to Recipe " + str(recipeID))
+            addRecipeIngredientCmd()
         elif command[0] == "removeRecipeIngredient" or command[0] == "rri":
-            recipeID = int(input("Enter the recipe you want to change: "))
-            ingredID = int(input("Enter the ingredient you want to remove: "))
-            deleteIncorporation(recipeID, ingredID)
-            print("Ingredient " + str(ingredID) + " has been removed from Recipe " + str(recipeID))
+            removeRecipeIngredientCmd()
         elif command[0] == "editRecipeIngredientQuantity" or command[0] == "eriq":
-            recipeID = int(input("Enter the recipe you want to change: "))
-            ingredID = int(input("Enter the ingredient you want to affect: "))
-            quantity = float(input("Enter the updated quantity the recipe requires: "))
-            updateIncorporation(recipeID, ingredID, quantity)
-            print("Recipe "+str(recipeID)+" now requires "+str(quantity)+" stones of "+str(ingredID))
+            editRecipeIngredientQuantityCmd()
         # CATEGORY OPERATIONS
         # CREATE CATEGORY
-        elif command[0] == "createCategory":
+        elif command[0] == "createCategory" or command[0] == "cc":
             categoryName = input("Enter the name of the category: ")
-            recipeId = int(input("Enter a recipe ID to add: "))
-            createNewCategory(currentUser, recipeId, categoryName)
-
-        # EDIT CATEGORY NAME
-        elif command[0] == "editCategory":
-            categoryName = input("Enter name of category you want to change: ")
-            categoryNewName = input("Enter new name of the category: ")
-            changeCategoryName(categoryName, categoryNewName)
+            createNewCategory(currentUser, categoryName)
 
         # LIST CATEGORIES
         elif command[0] == "listCategories":
             print("List of categories:\n")
-            listAllCategories()
+            listAllCategories(currentUser.getUser())
 
         # DELETE CATEGORY
         elif command[0] == "deleteCategory":
             categoryName = input("Enter the name of the category to delete: ")
-            deleteCategory(categoryName)
+            deleteCategory(currentUser.getUser(), categoryName)
+            print("Category deleted")
 
         # ADD RECIPE IN CATEGORY
-        elif command[0] == "addRecipeInCategory":
+        elif command[0] == "addRecipeInCategory" or command[0] == "aric":
             categoryName = input("Enter name of category to add to: ")
-            recipeId = int(input("Enter the id of the recipe to add: "))
-            addNewRecipe(recipeId, categoryName)
+            recipeId = getIntPositive("Enter the id of the recipe to add: ")
+            addToCategory(recipeId, categoryName, currentUser.getUser())
+            print("Category " + categoryName + " assigned to " + str(recipeId))
 
         # DELETE RECIPE IN CATEGORY
-        elif command[0] == "deleteRecipeInCategory":
+        elif command[0] == "deleteRecipeInCategory" or command[0] == "dric":
             categoryName = input("Enter name of category to delete from: ")
-            recipeId = int(input("Enter the id of the recipe to delete: "))
-            deleteOldRecipe(recipeId, categoryName)
+            recipeId = getIntPositive("Enter the id of the recipe to delete: ")
+            deleteFromCategory(recipeId, categoryName, currentUser.getUser())
+            print("Category " + categoryName + " removed from " + str(recipeId))
 
         # RECIPE SEARCH
         elif command[0] == "search" or command[0] == "s":
             key = input("Please choose a search format [categories, name, ingredients]: ")
             while not (key == "categories" or key == "name" or key == "ingredients"):
                 key = input("Incorrect format please try again [categories, name, ingredients]: ")
-            searchRecipe(key)
+            surt = input("Please choose a sort format [date, rating, alphabetical]: ")
+            if not (surt == "date" or surt == "rating"):
+                surt = "alf"
+            searchRecipe(key, surt)
 
         # COOKING RELATED OPERATIONS
         # COOK A RECIPE
         elif command[0] == "cookRecipe" or command[0] == "cr":
-            recipeID = int(input("Enter the ID of the recipe you wish to make: "))
-            scalar = float(input("Enter the number by which you multiplied the recipe's ingredients: "))
-            rating = int(input("Enter what you would rate this recipe on a scale of 0 to 5 "))
-            if rating < 0:
-                rating = 0
-            elif rating > 5:
-                rating = 5
-            makeRecipe(recipeID, currentUser.getUser(), scalar, rating)
+            cookRecipeCmd(currentUser)
         # TELLS THE USER IF THEY CAN MAKE A RECIPE
         elif command[0] == "canIMake" or command[0] == "cim":
-            recipeID = int(input("Enter the ID of the recipe you wish to make: "))
-            scalar = float(input("How many times would you like to make this recipe: "))
-            if recipeCanBeMade(recipeID, currentUser.getUser(), scalar):
-                print("You have everything you need to make that volume of this recipe")
-            else:
-                print("You lack the required ingredients to make that volume of this recipe")
+            canIMakeCmd(currentUser)
 
         # PANTRY OPERATIONS
         # PRINTS THE USER'S PANTRY
@@ -164,17 +118,20 @@ def parseInput(inputStr):
             printMyPantryStr(currentUser.getUser())
         # ADDS AN INGREDIENT TO THE USER'S PANTRY
         elif command[0] == "addIngredientToPantry" or command[0] == "aitp":
-            purchaseDate = datetime.datetime.now()
-            ingrID = int(input("Enter the Ingredient ID: "))
-            quantity = float(input("Enter the quantity purchased: "))
-            expirationDate = addDays(purchaseDate, int(input("Enter the number of days before it expires: ")))
-            insertToPantry(purchaseDate, currentUser.getUser(), ingrID, quantity, expirationDate)
+            addIngredientToPantryCmd(currentUser)
         # REMOVES AN INGREDIENT FROM THE USER'S PANTRY
         elif command[0] == "deletePantryEntry" or command[0] == "dpe":
-            ingrID = int(input("Enter the ID of the ingredient you wish to delete: "))
-            purchstr = "Enter the purchase date in this format: " + str(datetime.datetime.now())
-            purchDate = datetime.datetime.fromisoformat(input(purchstr))
-            deleteFromPantry(purchDate, currentUser.getUser(), ingrID)
+            deletePantryEntryCmd(currentUser)
+
+        # MISC MISSING OPERATIONS
+        # VIEW A SINGLE RECIPE
+        elif command[0] == "viewRecipe" or command[0] == "vr":
+            recipeID = getIntPositive("Enter the ID of the recipe you wish to view: ")
+            printOneRecipe(recipeID)
+        # PHASE 4 OPERATIONS
+        # DISPLAYS RECIPES THE USER CAN MAKE 1 BATCH OF
+        elif command[0] == "getRecipiesOnHand" or command[0] == "groh":
+            getAllMakable(currentUser.getUser())
 
         # RATING OPERATIONS
         # RETURNS THE 50 HIGHEST RATED RECIPES
@@ -187,3 +144,101 @@ def parseInput(inputStr):
         elif command[0] == "sb" or command[0] == "stickbug":
             stickbug()
 
+
+# TODO move everything into helper methods like this
+def printOneRecipe(recipe_id):
+    rec = getRecipeByID(recipe_id)
+    titleStr = str(rec[0]) + ": " + str(rec[1])
+    ingreds = getIncorporationsByRecipeID(recipe_id)
+    ingredStr = "ingredients (id:###): "
+    for incorp in ingreds:
+        ingredStr += "("+str(incorp[1])+":"+str(incorp[2])+") "
+    print(titleStr)
+    print("rating: "+str(rec[2]))
+    print(ingredStr)
+    print("description: "+rec[3])
+    print("cook time: "+str(rec[4]))
+    print("steps: "+rec[5])
+    print("difficulty: "+rec[6])
+
+
+def createRecipeCmd(currentUser1):
+    recipeName = input("Enter the name of your new recipe: ")
+    description = input("Enter a description: ")
+    cook_time = getFloatPositive(0, 0, "Prep time in minutes: ")
+    steps = input("What steps does it take to prepare? ")
+    dif = getValidDifficulty("Enter the new difficulty rating of this recipe: ")
+    newRecipe(currentUser1, recipeName, description, cook_time, steps, dif)
+
+def editRecipeCmd(currentUser1):
+    recipeID = getIntPositive("Enter the ID of the recipe you would like to edit: ")
+    field = 'taco'
+    while not (
+            field == 'name' or field == 'description' or field == 'cook_time' or field == 'steps' or field == 'difficulty' or field == 'cancel'):
+        field = input("Enter the field you wish to edit [name,description,cook_time,steps,difficulty]: ")
+    if field == 'name':
+        newName = input("Enter the new name of this recipe: ")
+        changeRecipeName(currentUser1, recipeID, newName)
+    elif field == 'description':
+        newDescription = input("Enter the new description of this recipe: ")
+        changeRecipeDescription(currentUser1, recipeID, newDescription)
+    elif field == 'cook_time':
+        newCookTime = getIntPositive("Enter the revised cook time: ")
+        changeRecipeCookTime(currentUser1, recipeID, newCookTime)
+    elif field == 'steps':
+        newSteps = input("Enter a revised series of steps: ")
+        changeRecipeSteps(currentUser1, recipeID, newSteps)
+    elif field == 'difficulty':
+        dif = getValidDifficulty("Enter the new difficulty rating of this recipe: ")
+        changeRecipeDifficulty(currentUser1, recipeID, dif)
+# TODO might not check for recipe ownership
+def addRecipeIngredientCmd():
+    recipeID = getIntPositive("Enter the recipe you want to change: ")
+    ingredID = getIntPositive("Enter the ingredient you want to add: ")
+    quantity = getFloatPositive(0, 0, "Enter the quantity the recipe requires: ")
+    createIncorporation(recipeID, ingredID, quantity)
+    print("Ingredient " + str(ingredID) + " has been added to Recipe " + str(recipeID))
+# TODO might not check for recipe ownership
+def removeRecipeIngredientCmd():
+    recipeID = getIntPositive("Enter the recipe you want to change: ")
+    ingredID = getIntPositive("Enter the ingredient you want to remove: ")
+    deleteIncorporation(recipeID, ingredID)
+    print("Ingredient " + str(ingredID) + " has been removed from Recipe " + str(recipeID))
+# TODO might not check for recipe ownership
+def editRecipeIngredientQuantityCmd():
+    recipeID = getIntPositive("Enter the recipe you want to change: ")
+    ingredID = getIntPositive("Enter the ingredient you want to affect: ")
+    quantity = getFloatPositive(0, 0, "Enter the updated quantity the recipe requires: ")
+    updateIncorporation(recipeID, ingredID, quantity)
+    print("Recipe " + str(recipeID) + " now requires " + str(quantity) + " stones of " + str(ingredID))
+
+def cookRecipeCmd(currentUser1):
+    recipeID = getIntPositive("Enter the ID of the recipe you wish to make: ")
+    scalar = getFloatPositive(.01, .01, "Enter the number by which you multiplied the recipe's ingredients: ")
+    rating = getIntPositive("Enter what you would rate this recipe on a scale of 0 to 5 ")
+    if rating < 0:
+        rating = 0
+    elif rating > 5:
+        rating = 5
+    makeRecipe(recipeID, currentUser1.getUser(), scalar, rating)
+
+def canIMakeCmd(currentUser1):
+    recipeID = getIntPositive("Enter the ID of the recipe you wish to make: ")
+    scalar = getFloatPositive(.01, .01, "How many times would you like to make this recipe: ")
+    if recipeCanBeMade(recipeID, currentUser1.getUser(), scalar):
+        print("You have everything you need to make that volume of this recipe")
+    else:
+        print("You lack the required ingredients to make that volume of this recipe")
+
+def addIngredientToPantryCmd(currentUser1):
+    purchaseDate = datetime.datetime.now()
+    ingrID = getIntPositive("Enter the Ingredient ID: ")
+    quantity = getFloatPositive(.01,.01, "Enter the quantity purchased: ")
+    expirationDate = addDays(purchaseDate, int(input("Enter the number of days before it expires: ")))
+    insertToPantry(purchaseDate, currentUser1.getUser(), ingrID, quantity, expirationDate)
+
+def deletePantryEntryCmd(currentUser1):
+    ingrID = getIntPositive("Enter the ID of the ingredient you wish to delete: ")
+    purchstr = "Enter the purchase date in this format: " + str(datetime.datetime.now())
+    purchDate = datetime.datetime.fromisoformat(input(purchstr))
+    deleteFromPantry(purchDate, currentUser1.getUser(), ingrID)
