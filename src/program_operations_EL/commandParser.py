@@ -5,6 +5,7 @@ from src.program_operations.searchOperations import *
 from src.program_operations.categoriesOperations import *
 from src.program_operations_EL.memes import *
 from src.db.incorporationCRUD import *
+from src.program_operations.ratingOperations import *
 from src.program_operations_EL.ELphase4 import getAllMakable
 from src.program_operations_EL.safeInput import *
 
@@ -131,6 +132,11 @@ def parseInput(inputStr):
         # DISPLAYS RECIPES THE USER CAN MAKE 1 BATCH OF
         elif command[0] == "getRecipiesOnHand" or command[0] == "groh":
             getAllMakable(currentUser.getUser())
+
+        # RATING OPERATIONS
+        # RETURNS THE 50 HIGHEST RATED RECIPES
+        elif command[0] == "topFifty" or command[0] == "top50":
+            print(topFifty())
 
         # MEME OPERATIONS
         elif command[0] == "rr" or command[0] == "rickroll":
