@@ -5,9 +5,7 @@ from src.program_operations.searchOperations import *
 from src.program_operations.categoriesOperations import *
 from src.program_operations_EL.memes import *
 from src.db.incorporationCRUD import *
-from src.program_operations_EL.ELphase4 import getAllMakable
-from src.program_operations_EL.safeInput import *
-from src.program_operations.ratingOperations import *
+from src.program_operations.recommendationOperations import *
 from src.program_operations_EL.safeInput import *
 
 currentUser = None  # global variable for storing the current user
@@ -130,7 +128,8 @@ def parseInput(inputStr):
             recipeID = getIntPositive("Enter the ID of the recipe you wish to view: ")
             printOneRecipe(recipeID)
         elif command[0] == "addIngredient" or command[0] == "ai":
-            addIngredientCmd()
+            # TODO addIngredientCmd()
+            print("MUST ADD INGREDIENT ADDING FUNCTIONALITY")
         # PHASE 4 OPERATIONS
         # DISPLAYS RECIPES THE USER CAN MAKE 1 BATCH OF
         elif command[0] == "getRecipiesOnHand" or command[0] == "groh":
@@ -257,7 +256,7 @@ def deletePantryEntryCmd(currentUser1):
     purchDate = datetime.datetime.fromisoformat(input(purchstr))
     deleteFromPantry(purchDate, currentUser1.getUser(), ingrID)
 
-def addIngredientCmd():
+# def addIngredientCmd():
 
 # TODO move everything into helper methods like this
 def printOneRecipe(recipe_id):
