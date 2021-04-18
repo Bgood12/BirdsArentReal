@@ -37,11 +37,15 @@ def changeRecipeName(currentUser: CurrentUser, id, name):
 
 
 def changeRecipeRating(currentUser: CurrentUser, id, rating):
-    if getAuthorshipByID(id)[0] == currentUser.getUser() and currentUser.isLoggedIn():
-        updateRecipeRating(id, rating)
-        print("The recipe's rating has been updated")
-    else:
-        print("Current user did not create this recipe")
+    updateRating(currentUser.getUser(), id, rating)
+    newRating = 0
+    allRatings = getRatingsByRecipeCooked(id)
+    if len(allRatings) == 0:
+        return
+    for rat in allRatings:
+        newRating += rat[0]
+    newRating /= len(allRatings)
+    updateRecipeRating(id, newRating)
 
 
 def changeRecipeDescription(currentUser: CurrentUser, id, description):
@@ -82,3 +86,13 @@ def printMyRecipes(currentUser: CurrentUser):
         recipeName = getRecipeByID(recipe[1])[1]
         authorshipToString = "" + str(recipe[1]) + ": " + recipeName
         print(authorshipToString)
+
+def printMyHistory(currentUser: CurrentUser):
+    myCooked = listCookedRecipes(currentUser.getUser())
+    if(len(myCooked) == 0):
+        print("Your cooking history is empty")
+    print("id: name; your rating:average rating")
+    for cookedRecipe in myCooked:
+        recipe = getRecipeByID(cookedRecipe[0])
+        myRating = getRatingByUserRecipe(currentUser.getUser(), recipe[0])
+        print(str(recipe[0])+": "+recipe[1]+"; ("+str(myRating[0])+":"+str(recipe[2])+")")

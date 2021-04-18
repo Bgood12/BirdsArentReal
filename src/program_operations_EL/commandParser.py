@@ -110,6 +110,12 @@ def parseInput(inputStr):
         # TELLS THE USER IF THEY CAN MAKE A RECIPE
         elif command[0] == "canIMake" or command[0] == "cim":
             canIMakeCmd(currentUser)
+        elif command[0] == "updateRating" or command[0] == "ur":
+            recipe_id = getIntPositive("Please input the id of the recipe whose rating you'd like to change: ")
+            rating = getFloatPositive(0, 5, "input your new rating: ")
+            changeRecipeRating(currentUser, recipe_id, rating)
+        elif command[0] == "getMyHistory" or command[0] == "gmh":
+            printMyHistory(currentUser)
 
         # PANTRY OPERATIONS
         # PRINTS THE USER'S PANTRY
@@ -132,8 +138,7 @@ def parseInput(inputStr):
             print("MUST ADD INGREDIENT ADDING FUNCTIONALITY")
         # PHASE 4 OPERATIONS
         # DISPLAYS RECIPES THE USER CAN MAKE 1 BATCH OF
-        elif command[0] == "getRecipiesOnHand" or command[0] == "groh":
-            getAllMakable(currentUser.getUser())
+        elif command[0] == "deleteIngredientFromPantry" or command[0] == "difp":
             deletePantryEntryCmd(currentUser)
 
         # MISC MISSING OPERATIONS
@@ -234,6 +239,7 @@ def cookRecipeCmd(currentUser1):
     elif rating > 5:
         rating = 5
     makeRecipe(recipeID, currentUser1.getUser(), scalar, rating)
+    changeRecipeRating(currentUser1, recipeID, rating)
 
 def canIMakeCmd(currentUser1):
     recipeID = getIntPositive("Enter the ID of the recipe you wish to make: ")
@@ -324,16 +330,6 @@ def editRecipeIngredientQuantityCmd():
     quantity = getFloatPositive(0, 0, "Enter the updated quantity the recipe requires: ")
     updateIncorporation(recipeID, ingredID, quantity)
     print("Recipe " + str(recipeID) + " now requires " + str(quantity) + " stones of " + str(ingredID))
-
-def cookRecipeCmd(currentUser1):
-    recipeID = getIntPositive("Enter the ID of the recipe you wish to make: ")
-    scalar = getFloatPositive(.01, .01, "Enter the number by which you multiplied the recipe's ingredients: ")
-    rating = getIntPositive("Enter what you would rate this recipe on a scale of 0 to 5 ")
-    if rating < 0:
-        rating = 0
-    elif rating > 5:
-        rating = 5
-    makeRecipe(recipeID, currentUser1.getUser(), scalar, rating)
 
 def canIMakeCmd(currentUser1):
     recipeID = getIntPositive("Enter the ID of the recipe you wish to make: ")

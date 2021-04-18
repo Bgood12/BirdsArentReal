@@ -25,8 +25,6 @@ def updateRating(username, recipe_id, new_rating):
     :return:
     """
     update_sql = "UPDATE cooks SET rating = %s WHERE username = %s AND recipe_id = %s"
-    user_cook = exec_get_one('SELECT * FROM cooks WHERE username = %s', [username])
-    recipe = exec_get_one('SELECT * FROM user_cook WHERE recipe_id = %s', [recipe_id])
     exec_commit(update_sql, [new_rating, username, recipe_id])
 
 def updateServings(username, recipe_id, new_servings):
@@ -39,7 +37,7 @@ def updateServings(username, recipe_id, new_servings):
     """
     update_sql = "UPDATE recipe_id SET servings = %s WHERE servings = %s"
     user_cook = exec_get_one('SELECT * FROM cooks WHERE username = %s', [username])
-    recipe = exec_get_one('SELECT * FROM user_cook WHERE recipe_id = %s', [recipe_id])
+    recipe = exec_get_one('SELECT * FROM user_cook WHERE recipe_id = %s', [recipe_id]) # <-- not how to do that
     exec_commit(update_sql, [new_servings, recipe])    
 
 def listCookedRecipes(username):
@@ -48,9 +46,17 @@ def listCookedRecipes(username):
     :param username: The name to search ccoked recipes history
     :return:
     """
-    return exec_get_all('SELECT username FROM cooks', [username]) # <-- not how you do that, we'll fix it later
+    return exec_get_all('SELECT recipe_id FROM cooks WHERE username = %s', [username])
 
 
 def getChefsByRecipeCooked(recipe_id):
     get_sql = "SELECT username FROM cooks WHERE recipe_id = %s"
     return exec_get_all(get_sql, [recipe_id])
+
+def getRatingsByRecipeCooked(recipe_id):
+    get_sql = "SELECT rating FROM cooks WHERE recipe_id = %s"
+    return exec_get_all(get_sql, [recipe_id])
+
+def getRatingByUserRecipe(username, recipe_id):
+    get_sql = "SELECT rating FROM cooks WHERE username = %s AND recipe_id = %s"
+    return exec_get_one(get_sql, [username, recipe_id])
