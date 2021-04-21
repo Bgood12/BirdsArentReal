@@ -15,13 +15,11 @@ def getFloatPositive(minValue, maxValue, prompt):
             print(inStr + " is not a value between " + str(minValue) + " and " + str(maxValue))
     return flt
 
-def getIntPositive(prompt):
-    return getIntPositive(prompt, 0)
 
-def getIntPositive(prompt, minVal):
-    intgr = -2
+def getIntPositive(prompt):
+    intgr = -1
     inStr = "ya-yeet"
-    while intgr < minVal:
+    while intgr < 0:
         try:
             inStr = input(prompt)
             intgr = int(inStr)

@@ -4,7 +4,7 @@ This file serves as an easy way to fix issues in the database
 Problem 1, null ratings in database from data inputted via spreadsheet
 """
 from src.program_operations.recipeOperations import *
-
+from src.db.ingredientsCRUD import *
 
 def debuggg1():
     # reset all ratings to 0
@@ -17,4 +17,14 @@ def debuggg1():
 def debuggg2():
     updateRecipeRating(517, 2.5)
 
-debuggg2()
+def debuggggg3():
+    breaks = True
+    while breaks:
+        try:
+            insertIngredient("bigChungus", "sus")
+            breaks = False
+            print("not brokey")
+        except Exception:
+            print("still brokey")
+
+debuggggg3()

@@ -310,9 +310,16 @@ def editRecipeCmd(currentUser1):
 # TODO might not check for recipe ownership
 def addRecipeIngredientCmd():
     recipeID = getIntPositive("Enter the recipe you want to change: ")
-    ingredID = getIntPositive("Enter the ingredient you want to add (-1 to add new): ", 1)
-    if ingredID == -1:
-        ingredID = addIngredientCmd()
+    ingredID = -2
+    inStr = "mmm, monkey"
+    while ingredID < -1:
+        try:
+            inStr = input("Enter the ingredient you want to add (-1 to add new): ")
+            ingredID = int(inStr)
+            if ingredID == -1:
+                ingredID = addIngredientCmd()
+        except ValueError:
+            print(inStr + " is not a valid ingredient id")
     quantity = getFloatPositive(0, 0, "Enter the quantity the recipe requires: ")
     createIncorporation(recipeID, ingredID, quantity)
     print("Ingredient " + str(ingredID) + " has been added to Recipe " + str(recipeID))
