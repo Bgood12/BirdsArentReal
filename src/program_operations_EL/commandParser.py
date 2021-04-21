@@ -11,20 +11,6 @@ from src.program_operations_EL.safeInput import *
 currentUser = None  # global variable for storing the current user
 
 
-def helpcmd(loggedin):
-    # displays list of currently available commands
-    if loggedin:
-        print("Available commands:\nquit - quits the application\nhelp - display available commands\nlogout - logs "
-              "the current user out\ncreateRecipe - lets the user create a recipe\neditRecipe\ndeleteRecipe\ngetMyRecipes\n"
-              "addRecipeIngredient\nremoveRecipeIngredient\neditRecipeIngredientQuantity\ncreateCategory\nlistCategories"
-              "deleteCategory\naddRecipeInCategory\ndeleteRecipeInCategory\nsearch\ncookRecipe\ncanIMake\ngetMyPantry"
-              "addIngredientToPantry\ndeletePantryEntry\nrr")
-    else:
-        helpmessage = "Available commands:\nquit - quits the application\nhelp - display available commands\nlogin - logs the " \
-                      "users into their accounts\nregister - registers a new user account\n"
-        print(helpmessage)
-
-
 def parseInput(inputStr):
     command = inputStr.split()
     global currentUser
@@ -162,6 +148,20 @@ def parseInput(inputStr):
             rickRoll()
         elif command[0] == "sb" or command[0] == "stickbug":
             stickbug()
+
+
+def helpcmd(loggedin):
+    # displays list of currently available commands
+    if loggedin:
+        print("Available commands:\nquit - quits the application\nhelp - display available commands\nlogout - logs "
+              "the current user out\ncreateRecipe - lets the user create a recipe\neditRecipe\ndeleteRecipe\ngetMyRecipes\n"
+              "addRecipeIngredient\nremoveRecipeIngredient\neditRecipeIngredientQuantity\ncreateCategory\nlistCategories"
+              "deleteCategory\naddRecipeInCategory\ndeleteRecipeInCategory\nsearch\ncookRecipe\ncanIMake\ngetMyPantry"
+              "addIngredientToPantry\ndeletePantryEntry\nrr")
+    else:
+        helpmessage = "Available commands:\nquit - quits the application\nhelp - display available commands\nlogin - logs the " \
+                      "users into their accounts\nregister - registers a new user account\n"
+        print(helpmessage)
 
 
 # TODO move everything into helper methods like this
