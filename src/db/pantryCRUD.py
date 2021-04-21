@@ -76,3 +76,7 @@ def useIngredientByClosestExpirationDate(username, ingredient_id, quantity):
     while quantity > 0:
         entry = entries[i]
         quantity = useIngredientFromPantry(entry[0], username, ingredient_id, quantity)
+
+def getIngredientInAnyPantryCount(ingredient_id):
+    select_sql = "SELECT username FROM pantry WHERE ingredient_id = %s"
+    return len(exec_get_all(select_sql, [ingredient_id]))

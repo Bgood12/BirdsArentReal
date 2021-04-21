@@ -134,8 +134,9 @@ def parseInput(inputStr):
             recipeID = getIntPositive("Enter the ID of the recipe you wish to view: ")
             printOneRecipe(recipeID)
         elif command[0] == "addIngredient" or command[0] == "ai":
-            # TODO addIngredientCmd()
-            print("MUST ADD INGREDIENT ADDING FUNCTIONALITY")
+            addIngredientCmd()
+        elif command[0] == "deleteIngredient" or command[0] == "di":
+            deleteIngredientCmd()
         # PHASE 4 OPERATIONS
         # DISPLAYS RECIPES THE USER CAN MAKE 1 BATCH OF
         elif command[0] == "deleteIngredientFromPantry" or command[0] == "difp":
@@ -351,3 +352,20 @@ def deletePantryEntryCmd(currentUser1):
     purchstr = "Enter the purchase date in this format: " + str(datetime.datetime.now())
     purchDate = datetime.datetime.fromisoformat(input(purchstr))
     deleteFromPantry(purchDate, currentUser1.getUser(), ingrID)
+
+def addIngredientCmd():
+    ingred_name = input("Enter new ingredient name: ")
+    ingred_aisle = input("Enter the aisle of the new ingredient: ")
+    insertIngredient(ingred_name, ingred_aisle)
+    print("Ingredient " + ingred_name + " has been added to " + ingred_aisle)
+
+def deleteIngredientCmd():
+    ingrID = getIntPositive("Enter the ID of the ingredient you wish to delete: ")
+    if len(getIncorporationsByIngredientID(ingrID)) > 0:
+        print("Ingredient could not be deleted since it is used in at least one recipe")
+        return
+    if getIngredientInAnyPantryCount(ingrID) > 0:
+        print("Ingredient could not be deleted since it exists in a user's pantry")
+        return
+    deleteIngredient(ingrID)
+    print("If the ingredient existed, it has been deleted")
