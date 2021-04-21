@@ -106,12 +106,12 @@ def parseInput(inputStr):
             createNewCategory(currentUser, categoryName)
 
         # LIST CATEGORIES
-        elif command[0] == "listCategories":
+        elif command[0] == "listCategories" == "lc":
             print("List of categories:\n")
             listAllCategories(currentUser.getUser())
 
         # DELETE CATEGORY
-        elif command[0] == "deleteCategory":
+        elif command[0] == "deleteCategory" or command[0] == "dc":
             categoryName = input("Enter the name of the category to delete: ")
             deleteCategory(currentUser.getUser(), categoryName)
             print("Category deleted")
