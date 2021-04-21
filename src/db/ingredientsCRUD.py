@@ -28,4 +28,6 @@ def editIngredient(id, name, aisle):
 def getIngredient(id):
     return exec_get_one('SELECT * FROm ingredients WHERE ingredient_id = %s', [id])
 
-
+def getIngredientsIdByNameAisle(name, aisle):
+    select_sql = "SELECT ingredient_id FROM ingredients WHERE ingredient_name = %s AND aisle = %s"
+    return exec_get_all(select_sql, [name, aisle])

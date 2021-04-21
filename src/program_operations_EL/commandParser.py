@@ -163,7 +163,6 @@ def helpcmd(loggedin):
                       "users into their accounts\nregister - registers a new user account\n"
         print(helpmessage)
 
-
 # TODO move everything into helper methods like this
 def printOneRecipe(recipe_id):
     rec = getRecipeByID(recipe_id)
@@ -179,7 +178,6 @@ def printOneRecipe(recipe_id):
     print("cook time: "+str(rec[4]))
     print("steps: "+rec[5])
     print("difficulty: "+rec[6])
-
 
 def createRecipeCmd(currentUser1):
     recipeName = input("Enter the name of your new recipe: ")
@@ -263,8 +261,6 @@ def deletePantryEntryCmd(currentUser1):
     purchDate = datetime.datetime.fromisoformat(input(purchstr))
     deleteFromPantry(purchDate, currentUser1.getUser(), ingrID)
 
-# def addIngredientCmd():
-
 # TODO move everything into helper methods like this
 def printOneRecipe(recipe_id):
     rec = getRecipeByID(recipe_id)
@@ -314,7 +310,9 @@ def editRecipeCmd(currentUser1):
 # TODO might not check for recipe ownership
 def addRecipeIngredientCmd():
     recipeID = getIntPositive("Enter the recipe you want to change: ")
-    ingredID = getIntPositive("Enter the ingredient you want to add: ")
+    ingredID = getIntPositive("Enter the ingredient you want to add (-1 to add new): ", 1)
+    if ingredID == -1:
+        ingredID = addIngredientCmd()
     quantity = getFloatPositive(0, 0, "Enter the quantity the recipe requires: ")
     createIncorporation(recipeID, ingredID, quantity)
     print("Ingredient " + str(ingredID) + " has been added to Recipe " + str(recipeID))
@@ -358,6 +356,7 @@ def addIngredientCmd():
     ingred_aisle = input("Enter the aisle of the new ingredient: ")
     insertIngredient(ingred_name, ingred_aisle)
     print("Ingredient " + ingred_name + " has been added to " + ingred_aisle)
+    return getIngredientsIdByNameAisle(ingred_name, ingred_aisle)[0][0]
 
 def deleteIngredientCmd():
     ingrID = getIntPositive("Enter the ID of the ingredient you wish to delete: ")

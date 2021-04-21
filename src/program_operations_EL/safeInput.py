@@ -16,9 +16,12 @@ def getFloatPositive(minValue, maxValue, prompt):
     return flt
 
 def getIntPositive(prompt):
-    intgr = -1
+    return getIntPositive(prompt, 0)
+
+def getIntPositive(prompt, minVal):
+    intgr = -2
     inStr = "ya-yeet"
-    while intgr < 0:
+    while intgr < minVal:
         try:
             inStr = input(prompt)
             intgr = int(inStr)
