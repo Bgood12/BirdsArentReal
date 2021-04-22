@@ -123,6 +123,8 @@ def parseInput(inputStr):
             addIngredientCmd()
         elif command[0] == "deleteIngredient" or command[0] == "di":
             deleteIngredientCmd()
+        elif command[0] == "searchIngredient" or command[0] == "si":
+            searchIngredientByName()
         # PHASE 4 OPERATIONS
         # DISPLAYS RECIPES THE USER CAN MAKE 1 BATCH OF
         elif command[0] == "deleteIngredientFromPantry" or command[0] == "difp":
@@ -250,10 +252,21 @@ def canIMakeCmd(currentUser1):
 
 def addIngredientToPantryCmd(currentUser1):
     purchaseDate = datetime.datetime.now()
-    ingrID = getIntPositive("Enter the Ingredient ID: ")
+    ingredID = -3
+    inStr = "mmm, monkey"
+    while ingredID < -1:
+        try:
+            inStr = input("Enter the ingredient you want to add (-1 to add new, -2 to search): ")
+            ingredID = int(inStr)
+            if ingredID == -1:
+                ingredID = addIngredientCmd()
+            if ingredID == -2:
+                searchIngredientByName()
+        except ValueError:
+            print(inStr + " is not a valid ingredient id")
     quantity = getFloatPositive(.01,.01, "Enter the quantity purchased: ")
     expirationDate = addDays(purchaseDate, int(input("Enter the number of days before it expires: ")))
-    insertToPantry(purchaseDate, currentUser1.getUser(), ingrID, quantity, expirationDate)
+    insertToPantry(purchaseDate, currentUser1.getUser(), ingredID, quantity, expirationDate)
 
 def deletePantryEntryCmd(currentUser1):
     ingrID = getIntPositive("Enter the ID of the ingredient you wish to delete: ")
@@ -310,14 +323,16 @@ def editRecipeCmd(currentUser1):
 # TODO might not check for recipe ownership
 def addRecipeIngredientCmd():
     recipeID = getIntPositive("Enter the recipe you want to change: ")
-    ingredID = -2
+    ingredID = -3
     inStr = "mmm, monkey"
     while ingredID < -1:
         try:
-            inStr = input("Enter the ingredient you want to add (-1 to add new): ")
+            inStr = input("Enter the ingredient you want to add (-1 to add new, -2 to search): ")
             ingredID = int(inStr)
             if ingredID == -1:
                 ingredID = addIngredientCmd()
+            if ingredID == -2:
+                searchIngredientByName()
         except ValueError:
             print(inStr + " is not a valid ingredient id")
     quantity = getFloatPositive(0, 0, "Enter the quantity the recipe requires: ")
@@ -345,13 +360,6 @@ def canIMakeCmd(currentUser1):
     else:
         print("You lack the required ingredients to make that volume of this recipe")
 
-def addIngredientToPantryCmd(currentUser1):
-    purchaseDate = datetime.datetime.now()
-    ingrID = getIntPositive("Enter the Ingredient ID: ")
-    quantity = getFloatPositive(.01,.01, "Enter the quantity purchased: ")
-    expirationDate = addDays(purchaseDate, int(input("Enter the number of days before it expires: ")))
-    insertToPantry(purchaseDate, currentUser1.getUser(), ingrID, quantity, expirationDate)
-
 def deletePantryEntryCmd(currentUser1):
     ingrID = getIntPositive("Enter the ID of the ingredient you wish to delete: ")
     purchstr = "Enter the purchase date in this format: " + str(datetime.datetime.now())
@@ -359,8 +367,8 @@ def deletePantryEntryCmd(currentUser1):
     deleteFromPantry(purchDate, currentUser1.getUser(), ingrID)
 
 def addIngredientCmd():
-    ingred_name = input("Enter new ingredient name: ")
-    ingred_aisle = input("Enter the aisle of the new ingredient: ")
+    ingred_name = input("Enter new ingredient name: ").lower()
+    ingred_aisle = input("Enter the aisle of the new ingredient: ").lower()
     insertIngredient(ingred_name, ingred_aisle)
     print("Ingredient " + ingred_name + " has been added to " + ingred_aisle)
     return getIngredientsIdByNameAisle(ingred_name, ingred_aisle)[0][0]
@@ -375,3 +383,13 @@ def deleteIngredientCmd():
         return
     deleteIngredient(ingrID)
     print("If the ingredient existed, it has been deleted")
+
+def searchIngredientByName():
+    searchName = input("Enter a substring of your intended ingredient: ").lower()
+    ingreds = getIngredientsLikeName(searchName)
+    if len(ingreds) == 0:
+        print("No ingredients match your search")
+        return
+    print("id: name  :  aisle")
+    for ingred in ingreds:
+        print(str(ingred[0]) + ": " + ingred[1] + "  :  " + ingred[2])

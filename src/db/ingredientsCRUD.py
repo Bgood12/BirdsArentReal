@@ -31,3 +31,8 @@ def getIngredient(id):
 def getIngredientsIdByNameAisle(name, aisle):
     select_sql = "SELECT ingredient_id FROM ingredients WHERE ingredient_name = %s AND aisle = %s"
     return exec_get_all(select_sql, [name, aisle])
+
+def getIngredientsLikeName(ingredient_name):
+    select_sql = "SELECT * FROM ingredients WHERE ingredient_name LIKE %s"
+    ingredient_name = "%" + ingredient_name + "%"
+    return exec_get_all(select_sql, [ingredient_name])
