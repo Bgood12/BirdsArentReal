@@ -47,3 +47,16 @@ def updateRecipeSteps(id, steps):
 def updateRecipeDifficulty(id, difficulty):
     update_sql = "UPDATE recipes SET difficulty = %s WHERE recipe_id = %s"
     exec_commit(update_sql, [difficulty, id])
+
+def getRecipesLikeName(recipe_name):
+    select_sql = "SELECT * FROM recipes WHERE recipe_name LIKE %s"
+    recipe_name = "%" + recipe_name + "%"
+    return exec_get_all(select_sql, [recipe_name])
+
+def getRecommendedRecipes(username):
+    select_sql = "SELECT DISTINCT * FROM recipes WHERE recipe_id = \
+        (SELECT recipe_id FROM cooks WHERE NOT username = %s AND username = \
+            (SELECT username FROM cooks WHERE recipe_id = \
+                (SELECT recipe_id FROM cooks WHERE username = %s))) \
+        ORDER BY rating"
+    return exec_get_all(select_sql, [username])
