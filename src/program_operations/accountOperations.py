@@ -32,6 +32,9 @@ def login(username, password):
     """
     hash = _pwHash(password)
     user = exec_get_one("SELECT username FROM users WHERE username = %s AND password = %s", [username, hash])
+    if user is None:
+        print("Invalid username or password")
+        return
     if user[0] == username:
         updateLastAccess(username, datetime.datetime.now())
         print("User: " + username + " is logged in")
