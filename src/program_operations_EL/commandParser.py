@@ -148,6 +148,9 @@ def parseInput(inputStr):
         # RETURNS THE 50 HIGHEST RATED RECIPES
         elif command[0] == "topFifty" or command[0] == "top50":
             print(topFifty())
+        # RETURNS THE 50 NEWEST RECIPES
+        elif command[0] == "mostRecentFifty" or command[0] = "mr50"
+            print(topFiftyDates())
 
         # MEME OPERATIONS
         elif command[0] == "rr" or command[0] == "rickroll":
