@@ -147,10 +147,16 @@ def parseInput(inputStr):
         # RATING OPERATIONS
         # RETURNS THE 50 HIGHEST RATED RECIPES
         elif command[0] == "topFifty" or command[0] == "top50":
-            print(topFifty())
+            top50 = topFifty()
+            print("id : name : rating")
+            for recipe in top50:
+                print(str(recipe[0]) + " : " + recipe[1] + " : " + str(recipe[2]))
         # RETURNS THE 50 NEWEST RECIPES
         elif command[0] == "mostRecentFifty" or command[0] = "mr50"
-            print(topFiftyDates())
+            mostRecent50 = topFiftyDates()
+            print("id : name : creation date")
+            for recipe in mostRecent50
+                print(str(recipe[0]) + " : " + recipe[1] + " : " + str(recipe[2]))
 
         # MEME OPERATIONS
         elif command[0] == "rr" or command[0] == "rickroll":
@@ -417,6 +423,6 @@ def searchRecommendedRecipes():
     if len(recipes) == 0:
         print("we have no recommendations for your ...refined... palate.")
         return
-    print("id : name")
+    print("id : name : rating")
     for recipe in recipes:
-        print(str(recipe[0]) + " : " + recipe[1])
+        print(str(recipe[0]) + " : " + recipe[1] + " : " + str(recipe[2]))
