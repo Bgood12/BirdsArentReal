@@ -16,7 +16,7 @@ def searchRecipe(key, surtType, currentUser):
                 recipes.sort(key=lambda x: x[2])
                 recipes.reverse()
             elif surtType == "date":
-                recipes.sort(key=lambda x: x[5])  # TODO fix
+                recipes.sort(key=lambda x: x[5])
                 recipes.reverse()
             else:
                 recipes.sort(key=lambda x: x[1])
@@ -45,7 +45,7 @@ def searchRecipe(key, surtType, currentUser):
             result.sort(key=lambda x:x[2])
             result.reverse()
         elif surtType == "date":
-            result.sort(key=lambda x:x[7]) # TODO fix
+            result.sort(key=lambda x:x[7])
         else:
             result.sort(key=lambda x:x[1])
         print(result)
