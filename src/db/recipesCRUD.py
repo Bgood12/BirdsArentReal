@@ -49,7 +49,8 @@ def updateRecipeDifficulty(id, difficulty):
     exec_commit(update_sql, [difficulty, id])
 
 def getRecipesLikeName(recipe_name):
-    select_sql = "SELECT * FROM recipes WHERE recipe_name LIKE %s"
+    #select_sql = "SELECT * FROM recipes WHERE recipe_name LIKE %s"
+    select_sql = "SELECT recipes.*, authorship.creation_date FROM recipes INNER JOIN authorship ON recipes.recipe_id = authorship.recipe_id WHERE recipe_name LIKE %s"
     recipe_name = "%" + recipe_name + "%"
     return exec_get_all(select_sql, [recipe_name])
 

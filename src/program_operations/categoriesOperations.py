@@ -25,4 +25,4 @@ def deleteFromCategory(recipe_id, category_name, username):
     deleteRecipeFromCategory(recipe_id, category_name, username)
 
 def listAllInCategory(category_name, username):
-    listRecipesByCategory(category_name, username)
+    return listRecipesByCategory(category_name, username)

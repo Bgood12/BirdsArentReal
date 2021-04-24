@@ -87,7 +87,7 @@ def parseInput(inputStr):
             surt = input("Please choose a sort format [date, rating, alphabetical]: ")
             if not (surt == "date" or surt == "rating"):
                 surt = "alf"
-            searchRecipe(key, surt)
+            searchRecipe(key, surt, currentUser)
         elif command[0] == "searchRecipeNames" or command[0] == "srn":
             searchRecipeNames()
         elif command[0] == "searchRecommendedRecipes" or command[0] == "srr":

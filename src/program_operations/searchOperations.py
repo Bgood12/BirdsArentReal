@@ -4,19 +4,20 @@ from src.db.incorporationCRUD import *
 from src.db.ingredientsCRUD import *
 from src.program_operations.categoriesOperations import *
 
-def searchRecipe(key, surtType):
+def searchRecipe(key, surtType, currentUser):
     if key == "categories":
         search = input("Enter name of category: ")
-        if uniqueCategory(search, CurrentUser.getUser) == True:
+        if uniqueCategory(search, currentUser.getUser()) == True:
             print("This category does not exist.\n")
             return
         else:
-            recipes = listAllInCategory(search, CurrentUser.getUser())
+            recipes = listAllInCategory(search, currentUser.getUser())
             if surtType == "rating":
                 recipes.sort(key=lambda x: x[2])
                 recipes.reverse()
             elif surtType == "date":
-                recipes.sort(key=lambda x: x[2])  # TODO fix
+                recipes.sort(key=lambda x: x[5])  # TODO fix
+                recipes.reverse()
             else:
                 recipes.sort(key=lambda x: x[1])
             for recipe in recipes:
@@ -44,7 +45,7 @@ def searchRecipe(key, surtType):
             result.sort(key=lambda x:x[2])
             result.reverse()
         elif surtType == "date":
-            result.sort(key=lambda x:x[2]) # TODO fix
+            result.sort(key=lambda x:x[7]) # TODO fix
         else:
             result.sort(key=lambda x:x[1])
         print(result)
