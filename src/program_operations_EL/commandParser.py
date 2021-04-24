@@ -152,10 +152,10 @@ def parseInput(inputStr):
             for recipe in top50:
                 print(str(recipe[0]) + " : " + recipe[1] + " : " + str(recipe[2]))
         # RETURNS THE 50 NEWEST RECIPES
-        elif command[0] == "mostRecentFifty" or command[0] = "mr50"
+        elif command[0] == "mostRecentFifty" or command[0] == "mr50":
             mostRecent50 = topFiftyDates()
             print("id : name : creation date")
-            for recipe in mostRecent50
+            for recipe in mostRecent50:
                 print(str(recipe[0]) + " : " + recipe[1] + " : " + str(recipe[2]))
 
         # MEME OPERATIONS

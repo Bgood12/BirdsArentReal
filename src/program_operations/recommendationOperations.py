@@ -10,14 +10,8 @@ def topFifty():
     return exec_get_all("SELECT * FROM recipes ORDER BY rating DESC LIMIT 50")
 
 def topFiftyDates():
-    recipes_sorted = []
-    recipes = exec_get_all("SELECT recipe.recipe_id, recipe.recipe_name, authorship.creation_date FROM \
-        recipes INNER JOIN authorship ON recipe.recipe_id=authorship.recipe_id ORDER BY authorship.creation_date DESC LIMIT 50")
-    recipes = recipes[0]  # the ids of the recipes
-    for recipe_id in recipes:
-        recipe = getRecipeByID(recipe_id)
-        recipes_sorted.append(recipe)
-    return recipes_sorted
+    return exec_get_all("SELECT recipes.recipe_id, recipes.recipe_name, authorship.creation_date FROM \
+        recipes INNER JOIN authorship ON recipes.recipe_id=authorship.recipe_id ORDER BY authorship.creation_date DESC LIMIT 50")
 
 def getAllMakable(username):
     userPantry = getIngredientsByUser(username)
