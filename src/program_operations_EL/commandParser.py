@@ -90,7 +90,7 @@ def parseInput(inputStr):
             searchRecipe(key, surt)
         elif command[0] == "searchRecipeNames" or command[0] == "srn":
             searchRecipeNames()
-        elif command[0] == "searchRecommendedRecipes" or command[0] = "srr":
+        elif command[0] == "searchRecommendedRecipes" or command[0] == "srr":
             searchRecommendedRecipes()
 
         # COOKING RELATED OPERATIONS
@@ -398,7 +398,7 @@ def searchIngredientByName():
     for ingred in ingreds:
         print(str(ingred[0]) + ": " + ingred[1] + "  :  " + ingred[2])
 
-def searchRecipeNames()
+def searchRecipeNames():
     searchName = input("Enter a substring of your intended recipe: ").lower()
     recipes = getRecipesLikeName(searchName)
     if len(recipes) == 0:
@@ -406,14 +406,14 @@ def searchRecipeNames()
         return
     print("id : name")
     for recipe in recipes:
-        print(str(recipe[0] + " : " + recipe[1]))
+        print(str(recipe[0]) + " : " + recipe[1])
 
-def searchRecommendedRecipes()
+def searchRecommendedRecipes():
     username = currentUser.getUser()
-    recipes - getRecommendedRecipes(username)
+    recipes = getRecommendedRecipes(username)
     if len(recipes) == 0:
         print("we have no recommendations for your ...refined... palate.")
         return
     print("id : name")
     for recipe in recipes:
-        print(str(recipe[0] + " : " + recipe[1]))
+        print(str(recipe[0]) + " : " + recipe[1])

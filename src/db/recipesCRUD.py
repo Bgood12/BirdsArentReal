@@ -54,9 +54,9 @@ def getRecipesLikeName(recipe_name):
     return exec_get_all(select_sql, [recipe_name])
 
 def getRecommendedRecipes(username):
-    select_sql = "SELECT DISTINCT * FROM recipes WHERE recipe_id = \
-        (SELECT recipe_id FROM cooks WHERE NOT username = %s AND username = \
-            (SELECT username FROM cooks WHERE recipe_id = \
+    select_sql = "SELECT DISTINCT * FROM recipes WHERE recipe_id IN \
+        (SELECT recipe_id FROM cooks WHERE NOT username = %s AND username IN \
+            (SELECT username FROM cooks WHERE recipe_id IN \
                 (SELECT recipe_id FROM cooks WHERE username = %s))) \
         ORDER BY rating"
-    return exec_get_all(select_sql, [username])
+    return exec_get_all(select_sql, [username, username])
