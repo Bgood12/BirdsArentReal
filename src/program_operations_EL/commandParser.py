@@ -170,9 +170,11 @@ def helpcmd(loggedin):
     if loggedin:
         print("Available commands:\nquit - quits the application\nhelp - display available commands\nlogout - logs "
               "the current user out\ncreateRecipe - lets the user create a recipe\neditRecipe\ndeleteRecipe\ngetMyRecipes\n"
-              "addRecipeIngredient\nremoveRecipeIngredient\neditRecipeIngredientQuantity\ncreateCategory\nlistCategories"
-              "deleteCategory\naddRecipeInCategory\ndeleteRecipeInCategory\nsearch\ncookRecipe\ncanIMake\ngetMyPantry"
-              "addIngredientToPantry\ndeletePantryEntry\nrr")
+              "addRecipeIngredient\nremoveRecipeIngredient\neditRecipeIngredientQuantity\ncreateCategory\nlistCategories\n"
+              "deleteCategory\naddRecipeInCategory\ndeleteRecipeInCategory\nsearch\nsearchRecipeNames\nsearchRecommendedRecipes\n"
+              "cookRecipe\ncanIMake\nupdateRating\ngetMyHistory\ngetMyPantry\naddIngredientToPantry\ndeletePantryEntry\n"
+              "viewRecipe\naddIngredient\ndeleteIngredient\nsearchIngredient\ndeleteIngredientFromPantry\nviewRecipe\n"
+              "getRecipiesOnHand\ntopFifty\nmostRecentFifty\nrr\nsb")
     else:
         helpmessage = "Available commands:\nquit - quits the application\nhelp - display available commands\nlogin - logs the " \
                       "users into their accounts\nregister - registers a new user account\n"
