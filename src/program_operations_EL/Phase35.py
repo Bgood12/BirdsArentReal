@@ -3,9 +3,11 @@ from src.db.pantryCRUD import *
 from src.db.ingredientsCRUD import getIngredient
 from src.db.cooksCRUD import *
 
-# TODO ensure that errors do not occur when a value in the incorperation is not present in the pantry at all
 def recipeCanBeMade(recipe_id, username, scalar):
     incorperations = getIncorporationsByRecipeID(recipe_id)
+    if len(incorperations) == 0:
+        print("The given recipe's ingredient list has not yet been populated")
+        return False
     for incorp in incorperations:
         if not ampleIngredientStored(username, incorp[1], incorp[2] * scalar):
             return False
