@@ -26,7 +26,7 @@ def updateIncorporation(recipe_id, ingredient_id, quantity):
 
 def getRecipesByIncorporation(ingredient_id, sort_type):
     select_sql = "SELECT * FROM recipes \
-        INNER JOIN incorporation ON recipes.recipe_id = incorporations.recipe_id \
+        INNER JOIN incorporation ON recipes.recipe_id = incorporation.recipe_id \
         INNER JOIN authorship ON recipes.recipe_id=authorship.recipe_id \
         WHERE incorporation.ingredient_id = %s ORDER BY %s"
     return exec_get_all(select_sql, [ingredient_id, sort_type])
