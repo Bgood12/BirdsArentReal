@@ -55,16 +55,22 @@ def searchRecipe(key, surtType, currentUser):
             result.reverse()
         elif surtType == "date" or surtType == "d":
             result.sort(key=lambda x:x[7])
+            result.reverse()
         else:
             result.sort(key=lambda x:x[1])
-        print(result)
+        if len(result) == 0:
+            print("No recipes contain that string")
+            return
+        print("Id: rating: name, creationDate")
+        for recipe in result:
+            print(str(recipe[0])+": "+str(recipe[2])+": "+recipe[1]+", "+str(recipe[7]))
 
     elif key == "ingredients" or key == "i":
         search = input("Enter id of ingredient: ")
         ingredToRecipe = extract(getIncorporationsByIngredientID(search))  # The recipe_ids
         print(ingredToRecipe) # Check recipe ids
         recipes = ()
-        
+        # TODO this type of search is hopelessly broken
         for name in ingredToRecipe:
             recipeName = extractFirst(getRecipesByName(name))
             recipes.append(recipeName)
@@ -72,13 +78,13 @@ def searchRecipe(key, surtType, currentUser):
             recipes.sort(key=lambda x: x[2])
             recipes.reverse()
         elif surtType == "date" or surtType == "d":
-            recipes.sort(key=lambda x: x[2])  # TODO fix
+            recipes.sort(key=lambda x: x[2])  # TODO make sort by dates
         else:
             recipes.sort(key=lambda x: x[1])
         for recipe in recipes:
             print(recipe)
 
-        recipeChoice = input ("Please choose a recipe by name: ") 
+        recipeChoice = input ("Please choose a recipe by name: ")
         result = getRecipesByName(recipeChoice)
         print(result)
 
