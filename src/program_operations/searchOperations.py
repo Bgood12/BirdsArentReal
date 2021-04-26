@@ -75,7 +75,8 @@ def searchRecipe(key, surtType, currentUser):
             sort = "recipe.recipe_name"
         
         ingredToRecipe = getRecipesByIncorporation(search, sort)
-        print(ingredToRecipe) 
+        for meal in ingredToRecipe:
+            print(meal[0])
 
         recipeChoice = input ("Please choose a recipe by name: ")
         result = getRecipesByName(recipeChoice)
