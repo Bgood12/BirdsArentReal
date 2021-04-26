@@ -24,9 +24,15 @@ def updateIncorporation(recipe_id, ingredient_id, quantity):
     update_sql = "UPDATE incorporation SET quantity = %s WHERE recipe_id = %s AND ingredient_id = %s"
     exec_commit(update_sql, [quantity, recipe_id, ingredient_id])
 
-def getRecipesByIncorporation(ingredient_id, sort_type):
-    select_sql = "SELECT * FROM recipes \
+def getRecipesByIncorporation(ingredient_id, surtType):
+    select_sql = "SELECT recipes.recipe_name FROM recipes \
         INNER JOIN incorporation ON recipes.recipe_id = incorporation.recipe_id \
         INNER JOIN authorship ON recipes.recipe_id=authorship.recipe_id \
-        WHERE incorporation.ingredient_id = %s ORDER BY %s"
-    return exec_get_all(select_sql, [ingredient_id, sort_type])
+        WHERE incorporation.ingredient_id = %s ORDER BY "
+    if surtType == "rating" or surtType == 'r':
+        select_sql += "recipes.rating DESC"
+    elif surtType == "date" or surtType == 'd':
+        select_sql += "authorship.creation_date"
+    else:
+        select_sql += "recipes.recipe_name"
+    return exec_get_all(select_sql, [ingredient_id])

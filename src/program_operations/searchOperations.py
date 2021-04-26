@@ -67,15 +67,10 @@ def searchRecipe(key, surtType, currentUser):
 
     elif key == "ingredients" or key == "i":
         search = input("Enter id of ingredient: ")
-        if surtType == "rating":
-            sort = "recipe.rating DESC"
-        elif surtType == "date":
-            sort = "authorship.creation_date"
-        else:
-            sort = "recipe.recipe_name"
-        
-        ingredToRecipe = getRecipesByIncorporation(search, sort)
-        print(ingredToRecipe) 
+
+        ingredToRecipe = getRecipesByIncorporation(search, surtType)
+        for meal in ingredToRecipe:
+            print(meal[0])
 
         recipeChoice = input ("Please choose a recipe by name: ")
         result = getRecipesByName(recipeChoice)
