@@ -1,7 +1,6 @@
 from src.db.incorporationCRUD import getIncorporationsByIngredientID
 from src.db.pantryCRUD import getIngredientsByUser
 from src.db.recipesCRUD import *
-from src.db.authorshipCRUD import *
 from src.program_operations.accountOperations import *
 from src.program_operations_EL.Phase35 import recipeCanBeMade
 
