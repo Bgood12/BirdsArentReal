@@ -69,12 +69,13 @@ def searchRecipe(key, surtType, currentUser):
         search = input("Enter id of ingredient: ")
 
         ingredToRecipe = getRecipesByIncorporation(search, surtType)
+        if len(ingredToRecipe) == 0:
+            print("This ingredient is not used in any recipes")
+            return
+        print("Id: rating: name, creationDate")
         for meal in ingredToRecipe:
-            print(meal[0])
+            print(str(meal[0])+": "+str(meal[2])+": "+meal[1]+", "+str(meal[3]))
 
-        recipeChoice = input ("Please choose a recipe by name: ")
-        result = getRecipesByName(recipeChoice)
-        print(result)
 
 
 def extract(list):

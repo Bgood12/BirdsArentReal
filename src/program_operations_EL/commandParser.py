@@ -206,7 +206,7 @@ def printOneRecipe(recipe_id):
     print("difficulty: "+rec[6])
 
 def createRecipeCmd(currentUser1):
-    recipeName = input("Enter the name of your new recipe: ")
+    recipeName = input("Enter the name of your new recipe: ").lower()
     description = input("Enter a description: ")
     cook_time = getFloatPositive(0, 0, "Prep time in minutes: ")
     steps = input("What steps does it take to prepare? ")
@@ -220,7 +220,7 @@ def editRecipeCmd(currentUser1):
             field == 'name' or field == 'description' or field == 'cook_time' or field == 'steps' or field == 'difficulty' or field == 'cancel'):
         field = input("Enter the field you wish to edit [name,description,cook_time,steps,difficulty]: ")
     if field == 'name':
-        newName = input("Enter the new name of this recipe: ")
+        newName = input("Enter the new name of this recipe: ").lower()
         changeRecipeName(currentUser1, recipeID, newName)
     elif field == 'description':
         newDescription = input("Enter the new description of this recipe: ")
