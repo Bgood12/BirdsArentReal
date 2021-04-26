@@ -23,3 +23,10 @@ def deleteIncorporation(recipe_id, ingredient_id):
 def updateIncorporation(recipe_id, ingredient_id, quantity):
     update_sql = "UPDATE incorporation SET quantity = %s WHERE recipe_id = %s AND ingredient_id = %s"
     exec_commit(update_sql, [quantity, recipe_id, ingredient_id])
+
+def getRecipesByIncorporation(ingredient_id, sort_type):
+    select_sql = "SELECT * FROM recipes \
+        INNER JOIN incorporation ON recipes.recipe_id = incorporations.recipe_id \
+        INNER JOIN authorship ON recipes.recipe_id=authorship.recipe_id \
+        WHERE incorporation.ingredient_id = %s ORDER BY %s"
+    return exec_get_all(select_sql, [ingredient_id, sort_type])
