@@ -43,11 +43,11 @@ def parseInput(inputStr):
         elif command[0] == "getMyRecipes" or command[0] == "gmr":
             printMyRecipes(currentUser)
         elif command[0] == "addRecipeIngredient" or command[0] == "ari":
-            addRecipeIngredientCmd()
+            addRecipeIngredientCmd(currentUser)
         elif command[0] == "removeRecipeIngredient" or command[0] == "rri":
-            removeRecipeIngredientCmd()
+            removeRecipeIngredientCmd(currentUser)
         elif command[0] == "editRecipeIngredientQuantity" or command[0] == "eriq":
-            editRecipeIngredientQuantityCmd()
+            editRecipeIngredientQuantityCmd(currentUser)
         # CATEGORY OPERATIONS
         # CREATE CATEGORY
         elif command[0] == "createCategory" or command[0] == "cc":
@@ -178,7 +178,6 @@ def helpcmd(loggedin):
                       "users into their accounts\nregister - registers a new user account\n"
         print(helpmessage)
 
-# TODO move everything into helper methods like this
 def printOneRecipe(recipe_id):
     rec = getRecipeByID(recipe_id)
     titleStr = str(rec[0]) + ": " + str(rec[1])
@@ -223,26 +222,6 @@ def editRecipeCmd(currentUser1):
     elif field == 'difficulty':
         dif = getValidDifficulty("Enter the new difficulty rating of this recipe: ")
         changeRecipeDifficulty(currentUser1, recipeID, dif)
-# TODO might not check for recipe ownership
-def addRecipeIngredientCmd():
-    recipeID = getIntPositive("Enter the recipe you want to change: ")
-    ingredID = getIntPositive("Enter the ingredient you want to add: ")
-    quantity = getFloatPositive(0, 0, "Enter the quantity the recipe requires: ")
-    createIncorporation(recipeID, ingredID, quantity)
-    print("Ingredient " + str(ingredID) + " has been added to Recipe " + str(recipeID))
-# TODO might not check for recipe ownership
-def removeRecipeIngredientCmd():
-    recipeID = getIntPositive("Enter the recipe you want to change: ")
-    ingredID = getIntPositive("Enter the ingredient you want to remove: ")
-    deleteIncorporation(recipeID, ingredID)
-    print("Ingredient " + str(ingredID) + " has been removed from Recipe " + str(recipeID))
-# TODO might not check for recipe ownership
-def editRecipeIngredientQuantityCmd():
-    recipeID = getIntPositive("Enter the recipe you want to change: ")
-    ingredID = getIntPositive("Enter the ingredient you want to affect: ")
-    quantity = getFloatPositive(0, 0, "Enter the updated quantity the recipe requires: ")
-    updateIncorporation(recipeID, ingredID, quantity)
-    print("Recipe " + str(recipeID) + " now requires " + str(quantity) + " stones of " + str(ingredID))
 
 def cookRecipeCmd(currentUser1):
     recipeID = getIntPositive("Enter the ID of the recipe you wish to make: ")
@@ -254,14 +233,6 @@ def cookRecipeCmd(currentUser1):
         rating = 5
     makeRecipe(recipeID, currentUser1.getUser(), scalar, rating)
     changeRecipeRating(currentUser1, recipeID, rating)
-
-def canIMakeCmd(currentUser1):
-    recipeID = getIntPositive("Enter the ID of the recipe you wish to make: ")
-    scalar = getFloatPositive(.01, .01, "How many times would you like to make this recipe: ")
-    if recipeCanBeMade(recipeID, currentUser1.getUser(), scalar):
-        print("You have everything you need to make that volume of this recipe")
-    else:
-        print("You lack the required ingredients to make that volume of this recipe")
 
 def addIngredientToPantryCmd(currentUser1):
     purchaseDate = datetime.datetime.now()
@@ -287,7 +258,6 @@ def deletePantryEntryCmd(currentUser1):
     purchDate = datetime.datetime.fromisoformat(input(purchstr))
     deleteFromPantry(purchDate, currentUser1.getUser(), ingrID)
 
-# TODO move everything into helper methods like this
 def printOneRecipe(recipe_id):
     rec = getRecipeByID(recipe_id)
     titleStr = str(rec[0]) + ": " + str(rec[1])
@@ -302,7 +272,6 @@ def printOneRecipe(recipe_id):
     print("cook time: "+str(rec[4]))
     print("steps: "+rec[5])
     print("difficulty: "+rec[6])
-
 
 def createRecipeCmd(currentUser1):
     recipeName = input("Enter the name of your new recipe: ")
@@ -333,9 +302,12 @@ def editRecipeCmd(currentUser1):
     elif field == 'difficulty':
         dif = getValidDifficulty("Enter the new difficulty rating of this recipe: ")
         changeRecipeDifficulty(currentUser1, recipeID, dif)
-# TODO might not check for recipe ownership
-def addRecipeIngredientCmd():
+
+def addRecipeIngredientCmd(currentUser1):
     recipeID = getIntPositive("Enter the recipe you want to change: ")
+    if not getAuthorshipByID(recipeID)[0] == currentUser1.getUser() or not currentUser1.isLoggedIn():
+        print("You are not logged in as the owner of this recipe")
+        return
     ingredID = -3
     inStr = "mmm, monkey"
     while ingredID < -1:
@@ -351,15 +323,21 @@ def addRecipeIngredientCmd():
     quantity = getFloatPositive(0, 0, "Enter the quantity the recipe requires: ")
     createIncorporation(recipeID, ingredID, quantity)
     print("Ingredient " + str(ingredID) + " has been added to Recipe " + str(recipeID))
-# TODO might not check for recipe ownership
-def removeRecipeIngredientCmd():
+
+def removeRecipeIngredientCmd(currentUser1):
     recipeID = getIntPositive("Enter the recipe you want to change: ")
+    if not getAuthorshipByID(recipeID)[0] == currentUser1.getUser() or not currentUser1.isLoggedIn():
+        print("You are not logged in as the owner of this recipe")
+        return
     ingredID = getIntPositive("Enter the ingredient you want to remove: ")
     deleteIncorporation(recipeID, ingredID)
     print("Ingredient " + str(ingredID) + " has been removed from Recipe " + str(recipeID))
-# TODO might not check for recipe ownership
-def editRecipeIngredientQuantityCmd():
+
+def editRecipeIngredientQuantityCmd(currentUser1):
     recipeID = getIntPositive("Enter the recipe you want to change: ")
+    if not getAuthorshipByID(recipeID)[0] == currentUser1.getUser() or not currentUser1.isLoggedIn():
+        print("You are not logged in as the owner of this recipe")
+        return
     ingredID = getIntPositive("Enter the ingredient you want to affect: ")
     quantity = getFloatPositive(0, 0, "Enter the updated quantity the recipe requires: ")
     updateIncorporation(recipeID, ingredID, quantity)
