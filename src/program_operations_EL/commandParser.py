@@ -250,6 +250,7 @@ def addIngredientToPantryCmd(currentUser1):
     quantity = getFloatPositive(.01,.01, "Enter the quantity purchased: ")
     expirationDate = addDays(purchaseDate, int(input("Enter the number of days before it expires: ")))
     insertToPantry(purchaseDate, currentUser1.getUser(), ingredID, quantity, expirationDate)
+    print(str(quantity)+" units of "+str(ingredID)+" have been added to your pantry")
 
 def deletePantryEntryCmd(currentUser1):
     ingrID = getIntPositive("Enter the ID of the ingredient you wish to delete: ")

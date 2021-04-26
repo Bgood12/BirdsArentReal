@@ -54,7 +54,7 @@ def getChefsByRecipeCooked(recipe_id):
     return exec_get_all(get_sql, [recipe_id])
 
 def getRatingsByRecipeCooked(recipe_id):
-    get_sql = "SELECT rating FROM cooks WHERE recipe_id = %s"
+    get_sql = "SELECT DISTINCT username FROM cooks WHERE recipe_id = %s"
     return exec_get_all(get_sql, [recipe_id])
 
 def getRatingByUserRecipe(username, recipe_id):

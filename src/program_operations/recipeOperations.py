@@ -43,7 +43,7 @@ def changeRecipeRating(currentUser: CurrentUser, id, rating):
     if len(allRatings) == 0:
         return
     for rat in allRatings:
-        newRating += rat[0]
+        newRating += getRatingByUserRecipe(rat[0], id)[0]
     newRating /= len(allRatings)
     updateRecipeRating(id, newRating)
 
