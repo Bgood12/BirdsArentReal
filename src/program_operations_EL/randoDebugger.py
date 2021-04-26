@@ -27,4 +27,28 @@ def debuggggg3():
         except Exception:
             print("still brokey")
 
-debuggggg3()
+def debug4():
+    select_sql = "SELECT DISTINCT recipe_id FROM cooks WHERE NOT recipe_id = %s"
+    allIds = exec_get_all(select_sql, ["6969"])
+    for rId in allIds:
+        idr = rId[0]
+        newRating = 0
+        allRatings = getRatingsByRecipeCooked(idr)
+        if len(allRatings) == 0:
+            return
+        for rat in allRatings:
+            newRating += getRatingByUserRecipe(rat[0], idr)[0]
+        newRating /= len(allRatings)
+        updateRecipeRating(idr, newRating)
+
+def printUserPercentRepeatedRecipeCreation():
+    select_sql = "SELECT DISTINCT username FROM cooks WHERE username IN (SELECT username FROM cooks GROUP BY username HAVING COUNT(recipe_id) > 1)"
+    select_sql2 = "SELECT DISTINCT username FROM cooks WHERE NOT recipe_id = %s"
+    notDist = exec_get_all(select_sql, [])
+    dist = exec_get_all(select_sql2, ["42069"])
+    print("Not distinct: " + str(len(notDist)))
+    print("Distinct: " + str(len(dist)))
+    for entry in notDist:
+        print(entry)
+
+printUserPercentRepeatedRecipeCreation()
