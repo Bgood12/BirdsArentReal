@@ -168,12 +168,23 @@ def helpcmd(loggedin):
     # displays list of currently available commands
     if loggedin:
         print("Available commands:\nquit - quits the application\nhelp - display available commands\nlogout - logs "
-              "the current user out\ncreateRecipe - lets the user create a recipe\neditRecipe\ndeleteRecipe\ngetMyRecipes\n"
-              "addRecipeIngredient\nremoveRecipeIngredient\neditRecipeIngredientQuantity\ncreateCategory\nlistCategories\n"
-              "deleteCategory\naddRecipeInCategory\ndeleteRecipeInCategory\nsearch\nsearchRecipeNames\nsearchRecommendedRecipes\n"
-              "cookRecipe\ncanIMake\nupdateRating\ngetMyHistory\ngetMyPantry\naddIngredientToPantry\ndeletePantryEntry\n"
-              "viewRecipe\naddIngredient\ndeleteIngredient\nsearchIngredient\ndeleteIngredientFromPantry\nviewRecipe\n"
-              "getRecipiesOnHand\ntopFifty\nmostRecentFifty\nrr\nsb")
+              "the current user out\ncreateRecipe - lets the user create a recipe\neditRecipe - lets the user edit a recipe\n"
+              "deleteRecipe - lets the user delete a recipe\ngetMyRecipes - gets the recipes that the user created\n"
+              "addRecipeIngredient - adds an ingredient to a recipe\nremoveRecipeIngredient - removes an ingredient from a recipe\n"
+              "editRecipeIngredientQuantity - changes the quantity of ingredients in the recipe\n"
+              "createCategory - creates a new category of recipes\nlistCategories - lists all recipe categories\n"
+              "deleteCategory - deletes a category of recipes\naddRecipeInCategory - adds a recipe to a category\n"
+              "deleteRecipeInCategory - removes a recipe from a category\nsearch - searches based on some format\n"
+              "searchRecipeNames - searches recipe by name\nsearchRecommendedRecipes - get recommended recipes\n"
+              "cookRecipe - indicates that you've cooked a recipe\n"
+              "canIMake - checks if yu have the ingredients in your pantry to make a recipe\n"
+              "updateRating - updates your rating of a recipe\ngetMyHistory - prints every recipe that you've cooked\n"
+              "getMyPantry - retrieves the contents of your pantry\naddIngredientToPantry - adds an ingredient to your pantry\n"
+              "deletePantryEntry - removes something from your pantry\nviewRecipe - retrieve a recipe\n"
+              "addIngredient - adds an ingredient\ndeleteIngredient - delets an ingredient\nsearchIngredient - searches for an ingredient\n"
+              "deleteIngredientFromPantry - removes an ingredient from your pantry\n"
+              "getRecipiesOnHand - displays recipe that a user can make\ntopFifty - returns the fifty highest rated recipes\n"
+              "mostRecentFifty - returns the newest fift recipes\nrr\nsb")
     else:
         helpmessage = "Available commands:\nquit - quits the application\nhelp - display available commands\nlogin - logs the " \
                       "users into their accounts\nregister - registers a new user account\n"
