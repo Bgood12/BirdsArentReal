@@ -1,4 +1,3 @@
-from src.program_operations.accountOperations import *
 from src.program_operations.recipeOperations import *
 from src.program_operations_EL.Phase35 import *
 from src.program_operations.searchOperations import *
@@ -82,10 +81,10 @@ def parseInput(inputStr):
         # RECIPE SEARCH
         elif command[0] == "search" or command[0] == "s":
             key = input("Please choose a search format [categories, name, ingredients]: ")
-            while not (key == "categories" or key == "name" or key == "ingredients"):
+            while not (key == "categories" or key == "name" or key == "ingredients" or key == "c" or key == "n" or key == "i"):
                 key = input("Incorrect format please try again [categories, name, ingredients]: ")
             surt = input("Please choose a sort format [date, rating, alphabetical]: ")
-            if not (surt == "date" or surt == "rating"):
+            if not (surt == "date" or surt == "rating" or surt == "d" or surt == "r"):
                 surt = "alf"
             searchRecipe(key, surt, currentUser)
         elif command[0] == "searchRecipeNames" or command[0] == "srn":
