@@ -46,7 +46,8 @@ def listCookedRecipes(username):
     :param username: The name to search ccoked recipes history
     :return:
     """
-    return exec_get_all('SELECT recipe_id FROM cooks WHERE username = %s', [username])
+    #return exec_get_all('SELECT recipe_id FROM cooks WHERE username = %s', [username])
+    return exec_get_all('SELECT recipe_id, COUNT(creation_date) FROM cooks WHERE username = %s GROUP BY recipe_id', [username])
 
 
 def getChefsByRecipeCooked(recipe_id):

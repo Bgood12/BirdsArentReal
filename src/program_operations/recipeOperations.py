@@ -91,8 +91,9 @@ def printMyHistory(currentUser: CurrentUser):
     myCooked = listCookedRecipes(currentUser.getUser())
     if(len(myCooked) == 0):
         print("Your cooking history is empty")
-    print("id: name; your rating:average rating")
+    print("id: times cooked: name; your rating:average rating")
     for cookedRecipe in myCooked:
         recipe = getRecipeByID(cookedRecipe[0])
         myRating = getRatingByUserRecipe(currentUser.getUser(), recipe[0])
-        print(str(recipe[0])+": "+recipe[1]+"; ("+str(myRating[0])+":"+str(recipe[2])+")")
+        #print(str(recipe[0])+": "+recipe[1]+"; ("+str(myRating[0])+":"+str(recipe[2])+")")
+        print(str(recipe[0]) + ": " + str(cookedRecipe[1]) + ": " + recipe[1] + "; (" + str(myRating[0]) + ":" + str(recipe[2]) + ")")

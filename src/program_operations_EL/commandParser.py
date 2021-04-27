@@ -184,7 +184,7 @@ def helpcmd(loggedin):
               "addIngredient - adds an ingredient\ndeleteIngredient - delets an ingredient\nsearchIngredient - searches for an ingredient\n"
               "deleteIngredientFromPantry - removes an ingredient from your pantry\n"
               "getRecipiesOnHand - displays recipe that a user can make\ntopFifty - returns the fifty highest rated recipes\n"
-              "mostRecentFifty - returns the newest fift recipes\nrr\nsb")
+              "mostRecentFifty - returns the newest fifty recipes\nrr\nsb")
     else:
         helpmessage = "Available commands:\nquit - quits the application\nhelp - display available commands\nlogin - logs the " \
                       "users into their accounts\nregister - registers a new user account\n"

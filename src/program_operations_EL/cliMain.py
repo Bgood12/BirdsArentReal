@@ -8,14 +8,5 @@ for line in sys.stdin:
         break
     else:
         parseInput(line)
+        print("<<Command ('help' to view)>>:")
 print("Program exited")
-"""
-print("type 'help' to view commands")
-running = True
-while running:
-    line = input(">> ")
-    if 'quit' == line.rstrip():
-        running = False
-    else:
-        parseInput(line)
-"""
