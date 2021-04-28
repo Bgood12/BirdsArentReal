@@ -6,7 +6,6 @@ def createRecipe(name, description, cook_time, steps, difficulty):
     exec_commit(create_sql, [name, description, cook_time, steps, difficulty])
     recipes = getRecipesByName(name)
     return recipes[-1]
-    # return exec_commit(create_sql, [name, description, cook_time, steps, difficulty])
                  
 def getRecipeByID(id):
     get_sql = "SELECT * FROM recipes WHERE recipe_id = %s"
@@ -49,7 +48,6 @@ def updateRecipeDifficulty(id, difficulty):
     exec_commit(update_sql, [difficulty, id])
 
 def getRecipesLikeName(recipe_name):
-    #select_sql = "SELECT * FROM recipes WHERE recipe_name LIKE %s"
     select_sql = "SELECT recipes.*, authorship.creation_date FROM recipes INNER JOIN authorship ON recipes.recipe_id = authorship.recipe_id WHERE recipe_name LIKE %s"
     recipe_name = "%" + recipe_name + "%"
     return exec_get_all(select_sql, [recipe_name])

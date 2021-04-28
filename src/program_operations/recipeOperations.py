@@ -95,5 +95,4 @@ def printMyHistory(currentUser: CurrentUser):
     for cookedRecipe in myCooked:
         recipe = getRecipeByID(cookedRecipe[0])
         myRating = getRatingByUserRecipe(currentUser.getUser(), recipe[0])
-        #print(str(recipe[0])+": "+recipe[1]+"; ("+str(myRating[0])+":"+str(recipe[2])+")")
         print(str(recipe[0]) + ": " + str(cookedRecipe[1]) + ": " + recipe[1] + "; (" + str(myRating[0]) + ":" + str(recipe[2]) + ")")
